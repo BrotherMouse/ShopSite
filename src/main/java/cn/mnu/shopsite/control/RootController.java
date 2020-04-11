@@ -50,11 +50,11 @@ public class RootController {
 
     @RequestMapping("checklogin")
     @ResponseBody
-    public Map<String, Object> checkLogin(HttpSession session, @RequestBody Map<String, String> input) {
+    public Map<String, Object> checkLogin(HttpSession session, @RequestBody Map<String, String> userInfo) {
         Map<String, Object> ret = new HashMap<>();
 
-        String account = input.get("account");
-        String password = input.get("password");
+        String account = userInfo.get("account");
+        String password = userInfo.get("password");
 
         User user = userDao.getUser(account);
         if(user == null) {
@@ -76,6 +76,34 @@ public class RootController {
     @RequestMapping("register")
     public String register() {
         return "register";
+    }
+
+    @RequestMapping("registeruser")
+    @ResponseBody
+    public Map<String, Object> registerUser(@RequestBody Map<String, String> userInfo) {
+        Map<String, Object> ret = new HashMap<>();
+
+        String account = userInfo.get("account");
+        String password = userInfo.get("password");
+
+        if(userDao.accountExists(account)) {
+            ret.put("result", "AccountExists");
+        }
+        else {
+            User user = new User();
+            user.setAccount(account);
+            user.setPassword(password);
+
+            boolean success = userDao.addUser(user);
+            if(success) {
+                ret.put("result", "Success");
+            }
+            else {
+                ret.put("result", "Fail");
+            }
+        }
+
+        return ret;
     }
 
     @RequestMapping("product/{id}")
