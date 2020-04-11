@@ -26,12 +26,12 @@ $(document).ready(function(){
 // 电脑
 $(document).ready(function(){
 
- $("#computer-item").mouseover(function(){
-    $("#computer-sub-item").show();
+ $(".computer-item").mouseover(function(){
+    $(".computer-sub-item").show();
   });
 
-  $("#computer-item").mouseout(function(){
-    $("#computer-sub-item").hide();
+  $(".computer-item").mouseout(function(){
+    $(".computer-sub-item").hide();
   });
 
 });

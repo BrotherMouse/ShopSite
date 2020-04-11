@@ -140,9 +140,9 @@
             </div>
             <div class="list-right">
                 <ul>
-                    <li id="computer-item" th:each="categoryProducts:${hotProducts}">
+                    <li class="computer-item" th:each="categoryProducts:${hotProducts}">
                         <a href="#" th:text="${categoryProducts.category.name}">电脑</a>
-                        <ul id="computer-sub-item">
+                        <ul class="computer-sub-item">
                             <li th:each="product:${categoryProducts.products}">
                                 <a >
                                     <img th:src="${product.thumbnailPath}">
@@ -151,7 +151,7 @@
                             </li>
                         </ul>
                     </li>
-
+                </ul>
             </div>
         </div>
 
@@ -203,13 +203,13 @@
 <div class="content-desc">
     <div class="container">
         <div class="banner">
-            <img src="images/index/banner/banner1.jpg">
+            <img src="/images/index/banner/banner1.jpg">
         </div>
         <!-- 人气栏 -->
         <div class="popular">
             <ul>
                 <li th:each="productPop:${popList}">
-                    <a th:href="/product/${productPop.id}">
+                    <a th:href="'/product/' + ${productPop.id}">
                         <div class="product-desc">
                             <p class="pro-name" th:text="${productPop.name}">小米笔记本</p>
                             <p class="pro-price">
@@ -245,15 +245,15 @@
             </div>
             <div class="phone-right">
                 <ul>
-                    <li th:each="productShow:${allCategories}">
+                    <li th:each="product:${productShow.products}">
                         <a href="#">
-                            <img th:src="${productShow.product.thumbnailPath }">
+                            <img th:src="${product.thumbnailPath }">
                             <div class="introduce">
-                                <p class="name" th:text="${productShow.product.name}">
+                                <p class="name" th:text="${product.name}">
                                     小米Note8 Pro
                                 </p>
                                 <p class="price" >
-                                    ￥<span th:text="${productShow.product.price}">1299</span>元
+                                    ￥<span th:text="${product.price}">1299</span>元
                                 </p>
                             </div>
                         </a>
