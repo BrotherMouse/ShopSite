@@ -6,26 +6,24 @@
 		
 		$.ajax({
 			type: "post",
- 			url: "login.aspx/UserLogin",
- 			data: "{'UserID':'"+userName+"','UserPwd':'"+pwd+"'}",
+ 			url: "/checklogin",
+ 			data: "{\"account\":\""+userName+"\",\"password\":\""+pwd+"\"}",
  			contentType: "application/json;charset=utf-8",
  			dataType: "json",
 			success: function(data){
-				if (data.d == "0") {
-					alert("登录的账号或密码不正确！");
-				}else if(data.d.substr(0,3)=="err"){
-                alert("data.d");
-                }else{
-                alert("登录成功！");
-                location.href = "index.html";
-                
-                }
+				if (data.result == "NotExist") {
+                					alert("账号不存在");
+                				}else if(data.result == "Verified"){
+                                    location.href = "index";
+                                }else{
+                                    alert("密码不正确");
+                                }
 
 
-			},
-			error: function(err){
-				alert(err);
-			}
+                			},
+                			error: function(err){
+                				alert(err);
+                			}
 
 		});
 	});

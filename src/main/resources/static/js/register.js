@@ -122,32 +122,25 @@ function checkPhone(){
 // register.aspx  InsertUserInfo(UserID, UserPwd)
  		$.ajax({
  			type: "post",
- 			url: "register.aspx/InsertUserInfo",
- 			data: "{'UserID':'"+ uID +"','UserPwd':'"+ uPwd +"'}",
+ 			url: "/registeruser",
+ 			data: "{\"account\":\""+userName+"\",\"password\":\""+pwd+"\"}",
  			contentType: "application/json;charset=utf-8",
  			dataType: "json",
  			async: true,
  			success: function(data) {
- 				switch(data.d)
- 				{
- 					case "1":
- 					alert("注册成功！");
- 					location.href="login.html";
- 					break;
- 					case "2":
- 					alert("账号重复，请重新注册！");
- 					break;
- 					default:
- 					alert(data.d);
+ 				if (data.result == "Success") {
+                                					alert("注册成功！");
+                                					 location.href = "login";
 
- 				}
+                                                }else{
+                                                    alert("用户已存在！");
+                                                }
 
 
-
- 			},
- 			error: function(err){
- 				alert(err);
- 			}
+                                			},
+                                			error: function(err){
+                                				alert(err);
+                                			}
  		});
 
  	});
