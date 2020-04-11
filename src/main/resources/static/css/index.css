@@ -251,7 +251,7 @@
 .nav .nav-list .list-left #nav-category .nav-category-item ul li a img:hover{
 	left: 1px;
 }
-.nav .nav-list .list-right #computer-item #computer-sub-item{
+.nav .nav-list .list-right .computer-item .computer-sub-item{
 	width: 740px;
 	height: 150px;
 	background-color: #e0e0e0;
@@ -261,17 +261,17 @@
 	z-index: 3;
     display: none;
 }
-.nav .nav-list .list-right #computer-item #computer-sub-item li{
+.nav .nav-list .list-right .computer-item .computer-sub-item li{
 	float: left;
 	width: 148px;
 	height: 150px;
 }
-.nav .nav-list .list-right #computer-item #computer-sub-item li a img{
+.nav .nav-list .list-right .computer-item .computer-sub-item li a img{
 	width: 140px;
 	height: 110px;
 	padding-top: 5px;
 }
-.nav .nav-list .list-right #computer-item #computer-sub-item li a p{
+.nav .nav-list .list-right .computer-item .computer-sub-item li a p{
 	font-size: 14px;
 	color: #ff6700;
 	text-align: center;
