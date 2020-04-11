@@ -123,7 +123,7 @@ function checkPhone(){
  		$.ajax({
  			type: "post",
  			url: "/registeruser",
- 			data: "{\"account\":\""+userName+"\",\"password\":\""+pwd+"\"}",
+ 			data: "{\"account\":\""+uID+"\",\"password\":\""+uPwd+"\"}",
  			contentType: "application/json;charset=utf-8",
  			dataType: "json",
  			async: true,

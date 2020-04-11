@@ -203,7 +203,7 @@
 		<span id="hd-desc">商品详情</span>
 		<span id="hd-para">规格参数</span>
 		<div id="hd-desc-sub" >
-			<img th:src="${product.exhibitPaths}">
+			<img th:each="path:${product.exhibitPaths}" th:src="${path}">
 		</div>
 	    <div class="hd-para-sub"></div> 
         <div class="other"></div>
