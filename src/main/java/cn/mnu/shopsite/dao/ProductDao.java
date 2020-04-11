@@ -101,4 +101,29 @@ public class ProductDao {
 
         return jdbcTemplate.query(sql, rowMapper, categoryId, n);
     }
+
+    /**
+     * 查询某个种类的最新上市的n个商品信息
+     *
+     * @param categoryId 品牌id，如Cellphone、Computer等
+     * @param n 取最新上市的n个
+     * @return 该种类最新上市的m个商品信息，m <= n
+     */
+    public List<Product> queryCategoryNewProducts(String categoryId, int n) {
+        String sql = "select * from t_product where category_id = ? order by listing_date desc limit ?";
+
+        return jdbcTemplate.query(sql, rowMapper, categoryId, n);
+    }
+
+    /**
+     * 查询最具人气的n个商品信息
+     *
+     * @param n 取最具人气的n个
+     * @return 最具人气的m个商品信息，m <= n
+     */
+    public List<Product> queryPopProducts(int n) {
+        String sql = "select * from t_product order by (purchase_amount - stock_balance) desc limit ?";
+
+        return jdbcTemplate.query(sql, rowMapper, n);
+    }
 }
