@@ -1,0 +1,82 @@
+/*无缝滚动图*/
+* {
+	margin:0;
+	padding:0
+}
+#div1 {
+	width:1226px;
+	height:200px;
+	margin:20px auto;
+	position:relative;
+	overflow:hidden
+}
+#div1 ul {
+	position:absolute;
+	left:0;
+	top:0
+}
+#div1 ul li {
+	float:left;
+	width:200px;
+	height:200px;
+	list-style:none
+}
+#div1 ul li img{
+	width: 200px;
+	height: 200px;
+}
+
+.banner{
+	margin: 0 auto;
+}
+.banner img{
+	height: 85px;
+}
+
+/*商品详情*/
+.list-desc{
+	width: 1226px;
+	height: 520px;
+}
+.list-desc ul{
+	width: 100%;
+	text-align: center;
+}
+.list-desc ul li{
+	float: left;
+	width: 234px;
+	height: 260px;
+	position: relative;
+}
+.list-desc ul li img{
+	width: 160px;
+	height: 160px;
+}
+.list-desc ul li a{
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.list-desc ul li a:hover{
+	top: -2px;
+	box-shadow: 10px 10px 15px #b0b0b0;
+}
+.list-desc ul li .title{
+	font-size: 14px;
+	font-weight: 400;
+	color: #333;
+}
+.list-desc ul li .desc{
+	height: 18px; 
+	font-size: 12px;
+	text-align: center;
+	color: #b0b0b0;
+	margin: 0 10px 10px;
+	overflow: hidden;  /*在这里的作用是：若文字太多一行显示不完，则隐藏显示*/
+	white-space: nowrap; /*不允许换行*/
+	text-overflow: ellipsis; /*超出部分的文本以“...”的形式表示*/
+}
+.list-desc ul li .price{
+	color: #ff6700;
+}

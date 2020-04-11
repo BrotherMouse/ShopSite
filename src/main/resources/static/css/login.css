@@ -1,0 +1,60 @@
+.login .top{
+	width: 1226px;
+	height: 120px;
+}
+.login .top  a{
+	display: block;
+	float: left;
+	width: 170px;
+	height: 120px;
+}
+.login .top  a img{
+	width: 170px;
+	height: 120px;
+}
+.login .top .insure{
+	float: right;
+}
+.login .top .insure span{
+	display: inline-block;
+	width: 180px;
+	height: 80px;
+	color: #333;
+	font-size: 20px;
+	padding-top: 40px;
+}
+.login .top .insure span .icon{
+	font-size: 25px;
+    color: purple;
+
+}
+.login-desc{
+	position: relative;
+	width: 1226px;
+	height: 550px;
+}
+.login-desc img{
+	width: 1226px;
+	height: 550px;
+
+}
+.login-desc .login-form{
+	background-color: #f4f4f4;
+	width: 550px;
+	height: 520px;
+	position: absolute;
+	top: 15px;
+	right: 60px;
+	text-align: center;
+}
+.login-desc .login-form input{
+	width: 300px;
+	height: 40px;
+	/*margin: 15px 0;*/
+}
+.login-desc .login-form .tip{
+	display: block;
+	width: 550px;
+	height: 25px;
+	color: red;
+}

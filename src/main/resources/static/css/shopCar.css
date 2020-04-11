@@ -1,0 +1,107 @@
+.shopCar-desc .shopCar-hd{
+	width: 1226px;
+	height: 40px;
+	background-color: #e0e0e0;
+	overflow: hidden;
+	line-height: 40px;
+	font-size: 16px;
+
+}
+.shopCar-desc .shopCar-hd span{
+	display: block;
+	width: 100px;
+	height: 40px;
+	float: left;
+	padding-left: 20px;
+}
+.shopCar-desc .shopCar-hd ul{
+	float: right;
+	width: 480px;
+	height: 40px;
+}
+.shopCar-desc .shopCar-hd ul li{
+	float: left;
+	width: 120px;
+	height: 40px;
+   
+}
+
+/*购物车详情*/
+#desc-list{
+	overflow: hidden;
+	font-size: 16px;
+}
+#desc-list #list-item{
+	width: 1226px;
+	height: 120px;
+	border-bottom: 1px solid #333;
+}
+#desc-list #list-img{
+	display: inline-block;
+	width: 500px;
+	height: 120px;
+
+}
+#desc-list #list-img img{
+	width: 110px;
+	height: 100px;
+	padding: 10px 0;
+	float: left;
+}
+#desc-list #list-img span{
+	display: block;
+	float: left;
+	padding-top: 40px;
+	color: #333;
+}
+#desc-list ul{
+	float: right;
+    width: 480px;
+    height: 120px;
+    color: #333;
+}
+#desc-list ul li{
+	float: left;
+	width: 120px;
+	height: 75px;
+	padding-top: 45px;
+}
+#desc-list ul li #sub,#add{
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+    border:1px solid #e0e0e0;
+    text-align: center;
+    font-size: 20px;
+    line-height: 20px;
+    float: left;
+}
+#desc-list ul li #quantity{
+	width: 25px;
+	height: 20px;
+	border: 1px solid #e0e0e0;
+	text-align: center;
+	float: left;
+}
+#pay #pay-price{
+	width: 1226px;
+	height: 60px;
+	line-height: 60px;
+	padding-left: 1000px;
+	
+}
+#pay #payBtn{
+	width: 1226px;
+	height: 50px;
+	background-color: #e0e0e0;
+	line-height: 50px;
+}
+#pay #payBtn input{
+	width: 160px;
+	height: 40px;
+	background-color: #ff6700;
+	margin-left: 1000px;
+	font-size: 18px;
+	color: #fff;
+
+}

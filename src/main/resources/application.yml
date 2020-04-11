@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: shop-site
+  datasource:
+    url: jdbc:mysql://localhost:3306/my_shop?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: mouse
+    password: mouse123
+    driver-class-name: com.mysql.cj.jdbc.Driver

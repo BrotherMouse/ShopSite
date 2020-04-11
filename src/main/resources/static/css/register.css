@@ -1,0 +1,61 @@
+.register .top{
+	width: 1226px;
+	height: 120px;
+}
+.register .top  a{
+	display: block;
+	float: left;
+	width: 170px;
+	height: 120px;
+}
+.register .top  a img{
+	width: 170px;
+	height: 120px;
+}
+.register .top .insure{
+	float: right;
+}
+.register .top .insure span{
+	display: inline-block;
+	width: 180px;
+	height: 80px;
+	color: #333;
+	font-size: 20px;
+	padding-top: 40px;
+}
+.register .top .insure span .icon{
+	font-size: 25px;
+    color: purple;
+
+}
+.register-desc{
+	position: relative;
+	width: 1226px;
+	height: 550px;
+}
+.register-desc img{
+	width: 1226px;
+	height: 550px;
+
+}
+.register-desc .register-form{
+	background-color: #f4f4f4;
+	width: 550px;
+	height: 530px;
+	position: absolute;
+	top: 10px;
+	right: 60px;
+	text-align: center;
+	
+}
+.register-desc .register-form input{
+	width: 300px;
+	height: 40px;
+
+}
+.register-desc .register-form .tip{
+	display: block;
+	width: 550px;
+	height: 25px;
+	color: red;
+}

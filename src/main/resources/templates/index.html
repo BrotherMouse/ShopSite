@@ -1,0 +1,377 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>商城首页</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/fonts.css">
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+</head>
+<body>
+<!-- 固定侧边栏 -->
+<div class="fix">
+    <ul>
+        <li id="top">
+            <a href="#">
+                <i class="iconfont">&#xe6cc;</i>
+                <p>回到顶部</p>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="iconfont">&#xe600;</i>
+                <p>购物车</p>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="iconfont">&#xe602;</i>
+                <p>收藏</p>
+            </a>
+        </li>
+        <li id="bottom">
+            <a href="#">
+                <i class="iconfont">&#xe64c;</i>
+                <p>回到底部</p>
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- 顶部栏 -->
+<div class="topBar">
+    <div class="container">
+        <div class="topBar-left">
+            <a href="#">
+                <i class="iconfont">&#xe61d;</i>
+                欢迎来到购物商城！
+            </a>
+        </div>
+        <div class="topBar-right">
+            <a href="/index">
+                <i class="iconfont">&#xe601;</i>
+                首页
+            </a>
+            <span>|</span>
+            <a href="/login" target="_blank" >
+                <i class="iconfont">&#xe608;</i>
+                登录
+            </a>
+            <span>|</span>
+            <a href="register" target="_blank">
+                <i class="iconfont">&#xe6ad;</i>
+                注册
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- 导航栏 -->
+<div class="nav">
+    <div class="container">
+        <div class="site-logo">
+            <a href="#">
+                <img src="/images/index/logo.jpg" alt="LOGO">
+            </a>
+        </div>
+        <div class="nav-ensure">
+		    <span>
+				<i class="iconfont">&#xe712;
+				</i>
+				100%正品
+			</span>
+            <span>
+			    <i class="iconfont">&#xe603;
+			    </i>
+				七天无理由退换货
+			</span>
+        </div>
+        <div class="nav-search">
+            <form action="">
+                <input type="text" class="search-text">
+                <i class="iconfont">&#xe605;</i>
+            </form>
+        </div>
+        <div class="nav-shopCar">
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class="iconfont">&#xe600;</i>
+                        <span>购物车</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="iconfont">&#xe604;</i>
+                        <span>订单</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="iconfont">&#xe602;</i>
+                        <span>收藏</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="nav-list">
+            <div class="list-left" id="brand-outer">
+                <a href="#" id="brand">
+                    品牌分类
+                    <i class="iconfont">&#xe656;</i>
+                </a>
+                <div id="nav-category">
+                    <ul>
+                        <li th:each="brandProducts:${newProducts}" class="nav-category-item">
+                            <a th:hef="${brandProducts.brand.id}" th:text="${brandProducts.brand.name}">品牌</a>
+                            <i class="iconfont">&#xe646;</i>
+                            <ul class="nav-sub-category">
+                                <li th:each="product:${brandProducts.products}">
+                                    <a href="#">
+                                        <img th:src="${product.thumbnailPath}">
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="list-right">
+                <ul>
+                    <li id="computer-item">
+                        <a href="#">电脑</a>
+                        <ul id="computer-sub-item">
+                            <li>
+                                <a href="file:///G:/shop_site/小米笔记本15.6GTX显卡.html">
+                                    <img src="/images/index/computer/mi/15.6 GTX显卡 6299.jpg">
+                                    <p class="name">15.6 GTX显卡</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="file:///G:/shop_site/ThinkBook 13s.html">
+                                    <img src="/images/index/computer/lenovo/Thinkbook 13s 4299.jpg">
+                                    <p class="name">Thinkbook 13s</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="/images/index/computer/huawei/MateBook13 5499.jpg">
+                                    <p class="name">MateBook13</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="/images/index/computer/Apple/Apple Mac.jpg">
+                                    <p class="name">Apple Mac</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="/images/index/computer/Samsung/星耀pen pro.jpg">
+                                    <p class="name">星耀pen pro</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li id="phone-item">
+                        <a href="#">手机</a>
+                        <ul id="phone-sub-item">
+                            <li>
+                                <a href="file:///G:/shop_site/小米Redmi 7A.html">
+                                    <img src="/images/index/phone/mi/Redmi 7A 539.jpg">
+                                    <p>Redmi 7A 539</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="file:///G:/shop_site/mate20 Pro.html">
+                                    <img src="/images/index/phone/huawei/mate20 Pro 5099.png" style="background-color: #fff;">
+                                    <p>mate20 Pro</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="/images/index/phone/iPhone/iPhone 11.jpg">
+                                    <p>iPhone 11</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="/images/index/phone/meizu/16s 2699.png" style="background-color: #fff;">
+                                    <p>16s 2699</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="/images/index/phone/samsung/Galaxy M30s 1699.jpg">
+                                    <p>Galaxy M30s</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li id="jiadian-item">
+                        <a href="#">家电</a>
+                        <ul id="jiadian-sub-item">
+                            <li>
+                                <a href="file:///G:/shop_site/小米洗衣机波轮8公斤 1A.html">
+                                    <img src="/images/index/家电/mi/洗衣机/米家波轮8公斤1A  799.jpg">
+                                    <p>米家波轮8公斤1A </p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="file:///G:/shop_site/三星冰箱RN40KD8.html">
+                                    <img src="/images/index/家电/Samsung/冰箱/三星 RN40KD8J0WW SC 450L风冷无霜智能变频多门冰箱家用 4999.jpg">
+                                    <p>三星 RN40KD8</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="/images/index/家电/mi/电视/小米 4A43   43寸  1199.jpg">
+                                    <p>小米 4A43 3寸 </p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="/images/index/家电/Samsung/洗衣机/三星8kg洗6kg烘除菌家用洗烘一体洗衣机WD80M4473JW SC 3599.jpg">
+                                    <p>三星 SC 450L</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="/images/index/家电/mi/空调/米家2P 3299.jpg">
+                                    <p>米家2P</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li id="chuandai-item">
+                        <a href="#">穿戴</a>
+                        <ul id="chuandai-sub-item">
+                            <li>
+                                <a href="file:///G:/shop_site/小米手环3.html">
+                                    <img src="/images/index/穿戴/mi/手表/小米手环3 169.jpg">
+                                    <p>小米手环3</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="/images/index/穿戴/mi/手表/小米手环3 NFC 199.jpg">
+                                    <p>小米手环3 NFC </p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="/images/index/穿戴/Samsung/手表/三星 Galaxy watch 智能手表 5ATM  1899.jpg">
+                                    <p>三星 Galaxy watch</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="/images/index/穿戴/mi/手表/米兔儿童电话手表4G  399.jpg">
+                                    <p>米兔儿童电话手表4G</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="/images/index/穿戴/Samsung/手表/三星 Samsung Galaxy watch LTE版  2498.jpg">
+                                    <p>三星 watch LTE版 </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">配件</a>
+                    </li>
+                    <li>
+                        <a href="#">生活</a>
+                    </li>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- 脚部 -->
+<div class="footer">
+    <div class="container">
+        <div class="footer-top">
+            <ul>
+                <li>
+                    <i class="iconfont">&#xe61f;</i>
+                    <span>正品保障</span>
+                </li>
+                <li>
+                    <i class="iconfont" >&#xe61e;</i>
+                    <span>满199包邮</span>
+                </li>
+                <li>
+                    <i class="iconfont">&#xe744;</i>
+                    <span>售后无忧</span>
+                </li>
+                <li>
+                    <i class="iconfont">&#xe743;</i>
+                    <span>准时送达</span>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <div class="bottom-left">
+                <dl>
+                    <dt>帮助中心</dt>
+                    <dd><a href="#">账户管理</a></dd>
+                    <dd><a href="#">订单操作</a></dd>
+                    <dd><a href="#">购物车</a></dd>
+                </dl>
+                <dl>
+                    <dt>服务支持</dt>
+                    <dd><a href="#">售后政策</a></dd>
+                    <dd><a href="#">自动服务</a></dd>
+                    <dd><a href="#">相关下载</a></dd>
+                </dl>
+                <dl>
+                    <dt>线下门店</dt>
+                    <dd><a href="#">购物之家</a></dd>
+                    <dd><a href="#">服务网点</a></dd>
+                    <dd><a href="#">授权体验店</a></dd>
+                </dl>
+                <dl>
+                    <dt>关注我们</dt>
+                    <dd><a href="#">官方微信</a></dd>
+                    <dd><a href="#">新浪微博</a></dd>
+                    <dd><a href="#">联系我们</a></dd>
+                </dl>
+            </div>
+            <div class="bottom-right">
+                <p class="phone">400-100-5678</p>
+                <p >周一至周日 8:00
+                    -18:00
+                    <br>
+                    （仅收市话费）
+
+                </p>
+                <a href="#">
+                    <i class="iconfont"></i>
+                    人工客服
+                </a>
+            </div>
+        </div>
+        <div class="beian">
+            <a href="#">川ICP备1605009607号</a>
+            <span>|</span>
+            <a href="#">经营证照</a>
+            <span>|</span>
+            <a href="#">川B2-20170729</a>
+            <span>|</span>
+            <a href="#">川公网安备 31010502002939号</a>
+            <span>|</span>
+            <a href="#">出版物经营许可证</a>
+            <span>|</span>
+            <a href="#">增值电信业务经营许可证</a>
+            <span>|</span>
+            <p>Copyright© 网上购物商城</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

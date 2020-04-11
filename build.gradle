@@ -1,0 +1,35 @@
+plugins {
+    id "org.springframework.boot" version "2.1.7.RELEASE"
+    id "io.spring.dependency-management" version "1.0.8.RELEASE"
+    id "java"
+}
+
+group "cn.mnu.shopsite"
+version "1.0-SNAPSHOT"
+
+sourceCompatibility = 1.8
+
+repositories {
+    maven {
+        name "aliyunmaven"
+        url "http://maven.aliyun.com/nexus/content/groups/public/"
+    }
+}
+
+dependencies {
+    implementation "org.projectlombok:lombok:1.18.8"
+    implementation "org.springframework.boot:spring-boot-starter-data-jdbc"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
+    implementation "mysql:mysql-connector-java"
+
+    annotationProcessor "org.projectlombok:lombok:1.18.8"
+    compileOnly "org.projectlombok:lombok:1.18.8"
+    testAnnotationProcessor "org.projectlombok:lombok:1.18.8"
+    testCompileOnly "org.projectlombok:lombok:1.18.8"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
