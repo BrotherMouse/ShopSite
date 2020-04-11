@@ -53,6 +53,7 @@ create table t_product_image (
 drop table if exists `t_user`;
 create table t_user (
   account char(20) not null, #账号，如mouse、peter
+  password char(20), #密码
   name char(20), #姓名
   sex char(1), #性别
   primary key(account)
@@ -106,12 +107,12 @@ insert into t_product_brand values ('Oneplus', '一加', 9, null);
 insert into t_product_brand values ('Samsung', '三星', 6, null);
 insert into t_product_brand values ('Xiaomi', '小米', 1, null);
 
-insert into t_product_category values ('Accessory', '配件', '丰富生活日常', 'images/index/phone/phone-left.jpg', 5, null);
-insert into t_product_category values ('Cellphone', '手机', '让我们变得更近', 'images/index/phone/phone-left.jpg', 2, null);
-insert into t_product_category values ('Computer', '电脑', '科技改变生活', 'images/index/computer/computer-left.jpg', 1, null);
-insert into t_product_category values ('HomeAppliance', '家电', '成为你的必需', 'images/index/家电/appliance-left.jpg', 3, null);
-insert into t_product_category values ('Life', '生活', '生活更有滋味', 'images/index/phone/phone-left.jpg', 6, null);
-insert into t_product_category values ('Wearing', '穿戴', '为生活增添乐趣', 'images/index/phone/phone-left.jpg', 4, null);
+insert into t_product_category values ('Accessory', '配件', '丰富生活日常', '/images/index/phone/phone-left.jpg', 5, null);
+insert into t_product_category values ('Cellphone', '手机', '让我们变得更近', '/images/index/phone/phone-left.jpg', 2, null);
+insert into t_product_category values ('Computer', '电脑', '科技改变生活', '/images/index/computer/computer-left.jpg', 1, null);
+insert into t_product_category values ('HomeAppliance', '家电', '成为你的必需', '/images/index/家电/appliance-left.jpg', 3, null);
+insert into t_product_category values ('Life', '生活', '生活更有滋味', '/images/index/phone/phone-left.jpg', 6, null);
+insert into t_product_category values ('Wearing', '穿戴', '为生活增添乐趣', '/images/index/phone/phone-left.jpg', 4, null);
 
 insert into t_product values (1, 'Cellphone', 'Xiaomi', 'Redmi Note8 Pro', 1299.00, 1000, 123, '2020-01-01', null);
 insert into t_product values (2, 'HomeAppliance', 'Xiaomi', '小米电视', 8999.00, 1000, 231, '2020-01-02', null);
