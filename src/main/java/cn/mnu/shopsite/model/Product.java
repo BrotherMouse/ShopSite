@@ -42,6 +42,11 @@ public class Product {
     private double price;
 
     /**
+     * 促销价
+     */
+    private double salePrice;
+
+    /**
      * 进货量
      */
     private int purchasedAmount;
@@ -55,6 +60,11 @@ public class Product {
      * 上市日期，商品的上市日期，用于index页面中【品牌分类】展示各品牌最新上市几款商品
      */
     private Date listingDate;
+
+    /**
+     * 商品描述
+     */
+    private String description;
 
     /**
      * 缩略图（1张）路径

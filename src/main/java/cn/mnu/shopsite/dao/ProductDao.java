@@ -31,9 +31,11 @@ public class ProductDao {
             product.setBrandId(rs.getString("brand_id"));
             product.setName(rs.getString("name"));
             product.setPrice(rs.getDouble("price"));
+            product.setSalePrice(rs.getDouble("sale_price"));
             product.setPurchasedAmount(rs.getInt("purchase_amount"));
             product.setStockBalance(rs.getInt("stock_balance"));
             product.setListingDate(rs.getDate("listing_date"));
+            product.setDescription(rs.getString("description"));
 
             setProductImagePath(product);
             return product;

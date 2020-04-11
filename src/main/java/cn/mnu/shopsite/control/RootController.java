@@ -1,5 +1,6 @@
 package cn.mnu.shopsite.control;
 
+import cn.mnu.shopsite.dao.ProductDao;
 import cn.mnu.shopsite.dao.UserDao;
 import cn.mnu.shopsite.model.*;
 import cn.mnu.shopsite.service.RecommendingService;
@@ -20,6 +21,9 @@ import java.util.Map;
 public class RootController {
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private ProductDao productDao;
 
     @Autowired
     private RecommendingService recommendingService;
@@ -115,6 +119,13 @@ public class RootController {
 
     @RequestMapping("product/{id}")
     public String productDetail(@PathVariable int id, Model model) {
-        return "product";
+        Product product = productDao.queryProduct(id);
+        if(product == null) {
+            return "redirect:index";
+        }
+        else {
+            model.addAttribute("product", product);
+            return "pro-desc";
+        }
     }
 }

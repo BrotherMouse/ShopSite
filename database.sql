@@ -31,9 +31,11 @@ create table t_product (
   brand_id char(20), #品牌id，即t_product_brand中的id
   name char(50), #商品名称，如iphone 10 plus
   price decimal(10, 2), #售价
+  sale_price decimal(10, 2), #促销价
   purchase_amount int, #进货数量
   stock_balance int, #库存数量
   listing_date date, #商品上市日期
+  description varchar(200), #商品描述
   remark varchar(200), #备注
   primary key(id)
 );
@@ -114,24 +116,33 @@ insert into t_product_category values ('HomeAppliance', '家电', '成为你的�
 insert into t_product_category values ('Life', '生活', '生活更有滋味', '/images/index/phone/phone-left.jpg', 6, null);
 insert into t_product_category values ('Wearing', '穿戴', '为生活增添乐趣', '/images/index/phone/phone-left.jpg', 4, null);
 
-insert into t_product values (1, 'Cellphone', 'Xiaomi', 'Redmi Note8 Pro', 1299.00, 1000, 123, '2020-01-01', null);
-insert into t_product values (2, 'HomeAppliance', 'Xiaomi', '小米电视', 8999.00, 1000, 231, '2020-01-02', null);
-insert into t_product values (3, 'Computer', 'Xiaomi', '小米电脑', 4299.00, 1000, 321, '2020-01-03', null);
-insert into t_product values (4, 'HomeAppliance', 'Xiaomi', '小米洗衣机', 1999.00, 1000, 300, '2020-01-04', null);
-insert into t_product values (5, 'HomeAppliance', 'Xiaomi', '小米空调', 1799.00, 1000, 111, '2020-01-05', null);
-insert into t_product values (6, 'Computer', 'Lenovo', 'Thinkbook 13s', 4299.00, 1000, 400, '2020-01-06', null);
-insert into t_product values (7, 'Computer', 'Lenovo', 'ThinkBook 14s', 5299.00, 1000, 99, '2020-01-07', null);
-insert into t_product values (8, 'Computer', 'Lenovo', 'ThinkPad T490', 13999.00, 1000, 192, '2020-01-08', null);
-insert into t_product values (9, 'Computer', 'Lenovo', 'ThinkPad X1 Yoga', 16899.00, 1000, 399, '2020-01-09', null);
-insert into t_product values (10, 'Computer', 'Lenovo', '一体机', 23499.00, 1000, 765, '2020-01-10', null);
+insert into t_product values (1, 'Cellphone', 'Xiaomi', 'Redmi Note8 Pro', 1299.00, 1099.00, 1000, 123, '2020-01-01', null, null);
+insert into t_product values (2, 'HomeAppliance', 'Xiaomi', '小米电视', 8999.00, 7999.00, 1000, 231, '2020-01-02', null, null);
+insert into t_product values (3, 'Computer', 'Xiaomi', '小米电脑', 4299.00, 4199.00, 1000, 321, '2020-01-03', null, null);
+insert into t_product values (4, 'HomeAppliance', 'Xiaomi', '小米洗衣机', 1999.00, 1900.00, 1000, 300, '2020-01-04', null, null);
+insert into t_product values (5, 'HomeAppliance', 'Xiaomi', '小米空调', 1799.00, 1700.00, 1000, 111, '2020-01-05', null, null);
+insert into t_product values (6, 'Computer', 'Xiaomi', '小米Pro 15.6" GTX显卡', 1799.00, 1700.00, 1000, 111, '2020-01-05', '全新第八代英特尔酷睿处理器 ／ 升级金属双风扇 ／ 带宽提升80% ／ 15.6"全高清大屏超窄边大视野', null);
+insert into t_product values (7, 'Computer', 'Lenovo', 'Thinkbook 13s', 4299.00, 4199.00, 1000, 400, '2020-01-06', null, null);
+insert into t_product values (8, 'Computer', 'Lenovo', 'ThinkBook 14s', 5299.00, 5099.00, 1000, 99, '2020-01-07', null, null);
+insert into t_product values (9, 'Computer', 'Lenovo', 'ThinkPad T490', 13999.00, 10999.00, 1000, 192, '2020-01-08', null, null);
+insert into t_product values (10, 'Computer', 'Lenovo', 'ThinkPad X1 Yoga', 16899.00, 16000.00, 1000, 399, '2020-01-09', null, null);
+insert into t_product values (11, 'Computer', 'Lenovo', '一体机', 23499.00, 20499.00, 1000, 765, '2020-01-10', null, null);
 
 insert into t_product_image values (1, 0, 'thumbnail', '/images/index/phone/mi/Redmi Note8 Pro 1299.jpg', null);
 insert into t_product_image values (2, 0, 'thumbnail', '/images/index/家电/mi/电视/小米 4-75 75寸 8999.jpg', null);
 insert into t_product_image values (3, 0, 'thumbnail', '/images/index/computer/mi/15.6极限版 4299.jpg', null);
 insert into t_product_image values (4, 0, 'thumbnail', '/images/index/家电/mi/洗衣机/米家变频10公斤滚桶烘干 1999.jpg', null);
 insert into t_product_image values (5, 0, 'thumbnail', '/images/index/家电/mi/空调/米家1.5P 1799.jpg', null);
-insert into t_product_image values (6, 0, 'thumbnail', '/images/index/computer/lenovo/Thinkbook 13s 4299.jpg', null);
-insert into t_product_image values (7, 0, 'thumbnail', '/images/index/computer/lenovo/ThinkBook 14s 5299.jpg', null);
-insert into t_product_image values (8, 0, 'thumbnail', '/images/index/computer/lenovo/ThinkPad T490 13999.jpg', null);
-insert into t_product_image values (9, 0, 'thumbnail', '/images/index/computer/lenovo/ThinkPad X1 Yoga.jpg', null);
-insert into t_product_image values (10, 0, 'thumbnail', '/images/index/computer/lenovo/一体机.jpg', null);
+insert into t_product_image values (6, 0, 'thumbnail', '/images/index/computer/mi/15.6 GTX显卡 6299.jpg', null);
+insert into t_product_image values (6, 1, 'exhibit', '/images/mi/computer/Pro 15.6增强版/img1.jpg', null);
+insert into t_product_image values (6, 2, 'exhibit', '/images/mi/computer/Pro 15.6增强版/img2.jpg', null);
+insert into t_product_image values (6, 3, 'exhibit', '/images/mi/computer/Pro 15.6增强版/img3.jpg', null);
+insert into t_product_image values (6, 4, 'exhibit', '/images/mi/computer/Pro 15.6增强版/img4.jpg', null);
+insert into t_product_image values (6, 5, 'exhibit', '/images/mi/computer/Pro 15.6增强版/img5.jpg', null);
+insert into t_product_image values (6, 6, 'exhibit', '/images/mi/computer/Pro 15.6增强版/img6.jpg', null);
+insert into t_product_image values (6, 7, 'exhibit', '/images/mi/computer/Pro 15.6增强版/参数.jpg', null);
+insert into t_product_image values (7, 0, 'thumbnail', '/images/index/computer/lenovo/Thinkbook 13s 4299.jpg', null);
+insert into t_product_image values (8, 0, 'thumbnail', '/images/index/computer/lenovo/ThinkBook 14s 5299.jpg', null);
+insert into t_product_image values (9, 0, 'thumbnail', '/images/index/computer/lenovo/ThinkPad T490 13999.jpg', null);
+insert into t_product_image values (10, 0, 'thumbnail', '/images/index/computer/lenovo/ThinkPad X1 Yoga.jpg', null);
+insert into t_product_image values (11, 0, 'thumbnail', '/images/index/computer/lenovo/一体机.jpg', null);
