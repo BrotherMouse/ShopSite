@@ -106,6 +106,13 @@ public class RootController {
         return ret;
     }
 
+    @RequestMapping("logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+
+        return "redirect:index";
+    }
+
     @RequestMapping("product/{id}")
     public String productDetail(@PathVariable int id, Model model) {
         return "product";
