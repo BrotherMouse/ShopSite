@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<!-- 导航栏 -->
+<div th:fragment="navigate">
+    <div class="nav">
+        <div class="container">
+            <div class="site-logo">
+                <a href="#">
+                    <img src="/images/index/logo.jpg" alt="LOGO">
+                </a>
+            </div>
+            <div class="nav-ensure">
+		    <span>
+				<i class="iconfont">&#xe712;
+				</i>
+				100%正品
+			</span>
+                <span>
+			    <i class="iconfont">&#xe603;
+			    </i>
+				七天无理由退换货
+			</span>
+            </div>
+            <div class="nav-search">
+                <form action="">
+                    <input type="text" class="search-text">
+                    <i class="iconfont">&#xe605;</i>
+                </form>
+            </div>
+            <div class="nav-shopCar">
+                <ul>
+                    <li>
+                        <a href="/cart">
+                            <i class="iconfont">&#xe600;</i>
+                            <span>购物车</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/order">
+                            <i class="iconfont">&#xe604;</i>
+                            <span>订单</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="iconfont">&#xe602;</i>
+                            <span>收藏</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="nav-list">
+                <div class="list-left" id="brand-outer">
+                    <a href="#" id="brand">
+                        品牌分类
+                        <i class="iconfont">&#xe656;</i>
+                    </a>
+                    <div id="nav-category">
+                        <ul>
+                            <li th:each="brandProducts:${newProducts}" class="nav-category-item">
+                                <a th:hef="${brandProducts.brand.id}" th:text="${brandProducts.brand.name}">品牌</a>
+                                <i class="iconfont">&#xe646;</i>
+                                <ul class="nav-sub-category">
+                                    <li th:each="product:${brandProducts.products}">
+                                        <a href="#">
+                                            <img th:src="${product.thumbnailPath}">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="list-right">
+                    <ul>
+                        <li class="computer-item" th:each="categoryProducts,status:${hotProducts}" th:id="'hotCategory_' + ${status.index}">
+                            <a href="#" th:text="${categoryProducts.category.name}">电脑</a>
+                            <ul class="computer-sub-item" th:id="'hotCategorySub_' + ${status.index}">
+                                <li th:each="product:${categoryProducts.products}">
+                                    <a th:href="'/product/' + ${product.id}">
+                                        <img th:src="${product.thumbnailPath}">
+                                        <p class="name" th:text="${product.name}">15.6 GTX显卡</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</html>

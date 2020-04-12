@@ -62,7 +62,9 @@
 }
 
 .pro-desc .desc-right {
-	float: right;
+	float: left;
+	width: 775px;
+	margin-left: 25px;
 
 }
 .pro-desc .desc-right .introduce{

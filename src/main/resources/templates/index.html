@@ -12,159 +12,14 @@
 </head>
 <body>
 <!-- 固定侧边栏 -->
-<div class="fix">
-    <ul>
-        <li id="top">
-            <a href="#">
-                <i class="iconfont">&#xe6cc;</i>
-                <p>回到顶部</p>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="iconfont">&#xe600;</i>
-                <p>购物车</p>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="iconfont">&#xe602;</i>
-                <p>收藏</p>
-            </a>
-        </li>
-        <li id="bottom">
-            <a href="#">
-                <i class="iconfont">&#xe64c;</i>
-                <p>回到底部</p>
-            </a>
-        </li>
-    </ul>
-</div>
+<div th:replace="float_tool :: float_tool"></div>
+
 <!-- 顶部栏 -->
-<div class="topBar">
-    <div class="container">
-        <div class="topBar-left">
-            <a href="#">
-                <i class="iconfont">&#xe61d;</i>
-                欢迎来到购物商城！
-            </a>
-        </div>
-        <div class="topBar-right">
-            <a href="/index">
-                <i class="iconfont">&#xe601;</i>
-                首页
-            </a>
-            <span>|</span>
-            <a href="/login" th:if="${session.user == null}" >
-                <i class="iconfont">&#xe608;</i>
-                登录
-            </a>
-            <a href="#" th:if="${session.user != null}" th:text="'欢迎您，'+${session.user.account}" >
-                <i class="iconfont">&#xe608;</i>
-                用户账户
-            </a>
-            <span>|</span>
-            <a href="register" th:if="${session.user == null}">
-                <i class="iconfont">&#xe6ad;</i>
-                注册
-            </a>
-            <a href="logout" th:if="${session.user != null}">
-                <i class="iconfont">&#xe608;</i>
-                注销
-            </a>
-        </div>
-    </div>
-</div>
+<div th:replace="top_bar :: top_bar"></div>
 
 <!-- 导航栏 -->
-<div class="nav">
-    <div class="container">
-        <div class="site-logo">
-            <a href="#">
-                <img src="/images/index/logo.jpg" alt="LOGO">
-            </a>
-        </div>
-        <div class="nav-ensure">
-		    <span>
-				<i class="iconfont">&#xe712;
-				</i>
-				100%正品
-			</span>
-            <span>
-			    <i class="iconfont">&#xe603;
-			    </i>
-				七天无理由退换货
-			</span>
-        </div>
-        <div class="nav-search">
-            <form action="">
-                <input type="text" class="search-text">
-                <i class="iconfont">&#xe605;</i>
-            </form>
-        </div>
-        <div class="nav-shopCar">
-            <ul>
-                <li>
-                    <a href="/cart">
-                        <i class="iconfont">&#xe600;</i>
-                        <span>购物车</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/order">
-                        <i class="iconfont">&#xe604;</i>
-                        <span>订单</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="iconfont">&#xe602;</i>
-                        <span>收藏</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="nav-list">
-            <div class="list-left" id="brand-outer">
-                <a href="#" id="brand">
-                    品牌分类
-                    <i class="iconfont">&#xe656;</i>
-                </a>
-                <div id="nav-category">
-                    <ul>
-                        <li th:each="brandProducts:${newProducts}" class="nav-category-item">
-                            <a th:hef="${brandProducts.brand.id}" th:text="${brandProducts.brand.name}">品牌</a>
-                            <i class="iconfont">&#xe646;</i>
-                            <ul class="nav-sub-category">
-                                <li th:each="product:${brandProducts.products}">
-                                    <a href="#">
-                                        <img th:src="${product.thumbnailPath}">
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="list-right">
-                <ul>
-                    <li class="computer-item" th:each="categoryProducts,status:${hotProducts}" th:id="'hotCategory_' + ${status.index}">
-                        <a href="#" th:text="${categoryProducts.category.name}">电脑</a>
-                        <ul class="computer-sub-item" th:id="'hotCategorySub_' + ${status.index}">
-                            <li th:each="product:${categoryProducts.products}">
-                                <a >
-                                    <img th:src="${product.thumbnailPath}">
-                                    <p class="name" th:text="${product.name}">15.6 GTX显卡</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
+<div th:replace="navigate :: navigate"></div>
 
-    </div>
-</div>
 <!-- 主页内容 -->
 <div class="Imgbox">
     <div class="lbview">
@@ -254,7 +109,7 @@
             <div class="phone-right">
                 <ul>
                     <li th:each="product:${productShow.products}">
-                        <a href="#">
+                        <a th:href="'/product/' + ${product.id}">
                             <img th:src="${product.thumbnailPath }">
                             <div class="introduce">
                                 <p class="name" th:text="${product.name}">
@@ -277,85 +132,7 @@
 
 
 <!-- 脚部 -->
-<div class="footer">
-    <div class="container">
-        <div class="footer-top">
-            <ul>
-                <li>
-                    <i class="iconfont">&#xe61f;</i>
-                    <span>正品保障</span>
-                </li>
-                <li>
-                    <i class="iconfont" >&#xe61e;</i>
-                    <span>满199包邮</span>
-                </li>
-                <li>
-                    <i class="iconfont">&#xe744;</i>
-                    <span>售后无忧</span>
-                </li>
-                <li>
-                    <i class="iconfont">&#xe743;</i>
-                    <span>准时送达</span>
-                </li>
-            </ul>
-        </div>
-        <div class="footer-bottom">
-            <div class="bottom-left">
-                <dl>
-                    <dt>帮助中心</dt>
-                    <dd><a href="#">账户管理</a></dd>
-                    <dd><a href="#">订单操作</a></dd>
-                    <dd><a href="#">购物车</a></dd>
-                </dl>
-                <dl>
-                    <dt>服务支持</dt>
-                    <dd><a href="#">售后政策</a></dd>
-                    <dd><a href="#">自动服务</a></dd>
-                    <dd><a href="#">相关下载</a></dd>
-                </dl>
-                <dl>
-                    <dt>线下门店</dt>
-                    <dd><a href="#">购物之家</a></dd>
-                    <dd><a href="#">服务网点</a></dd>
-                    <dd><a href="#">授权体验店</a></dd>
-                </dl>
-                <dl>
-                    <dt>关注我们</dt>
-                    <dd><a href="#">官方微信</a></dd>
-                    <dd><a href="#">新浪微博</a></dd>
-                    <dd><a href="#">联系我们</a></dd>
-                </dl>
-            </div>
-            <div class="bottom-right">
-                <p class="phone">400-100-5678</p>
-                <p >周一至周日 8:00
-                    -18:00
-                    <br>
-                    （仅收市话费）
+<div th:replace="footer :: footer"></div>
 
-                </p>
-                <a href="#">
-                    <i class="iconfont"></i>
-                    人工客服
-                </a>
-            </div>
-        </div>
-        <div class="beian">
-            <a href="#">川ICP备1605009607号</a>
-            <span>|</span>
-            <a href="#">经营证照</a>
-            <span>|</span>
-            <a href="#">川B2-20170729</a>
-            <span>|</span>
-            <a href="#">川公网安备 31010502002939号</a>
-            <span>|</span>
-            <a href="#">出版物经营许可证</a>
-            <span>|</span>
-            <a href="#">增值电信业务经营许可证</a>
-            <span>|</span>
-            <p>Copyright© 网上购物商城</p>
-        </div>
-    </div>
-</div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
 <head>
 	<meta charset="utf-8">
 	<title>登陆</title>
@@ -55,22 +55,8 @@
 			</div>
 		</div>
 	</div>
-    <div class="footer" style="margin-top: 15px;">
-    	<div class="beian">
-			<a href="#">川ICP备1605009607号</a>
-			<span>|</span>
-			<a href="#">经营证照</a>
-			<span>|</span>
-			<a href="#">川B2-20170729</a>
-			<span>|</span>
-			<a href="#">川公网安备 31010502002939号</a>
-			<span>|</span>
-			<a href="#">出版物经营许可证</a>
-			<span>|</span>
-			<a href="#">增值电信业务经营许可证</a>
-			<span>|</span>
-			<p>Copyright© 网上购物商城</p>
-		</div>
-    </div>
+	<!-- 脚部 -->
+	<div th:replace="footer :: footer"></div>
+
 </body>
 </html>
