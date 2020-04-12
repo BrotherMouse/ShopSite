@@ -43,4 +43,8 @@ window.onload = function() {
 };
 
 //加入购物车
-
+ $(document).ready(function(){
+    $(".in").on("click", function(){
+        var ID = $("#productId").val();
+    })
+ });

@@ -32,6 +32,13 @@
 	padding-top: 10px;
 	float: left;
 }
+#order-item ul li #del{
+    float: right;
+    margin-top: 38px;
+    width: 50px;
+    height: 30px;
+    margin-right: 20px;
+}
 #order-item ul li>span{
 	float: left;
 	font-size: 14px; 
