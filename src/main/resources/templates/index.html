@@ -148,9 +148,9 @@
             </div>
             <div class="list-right">
                 <ul>
-                    <li class="computer-item" th:each="categoryProducts:${hotProducts}">
+                    <li class="computer-item" th:each="categoryProducts,status:${hotProducts}" th:id="'hotCategory_' + ${status.index}">
                         <a href="#" th:text="${categoryProducts.category.name}">电脑</a>
-                        <ul class="computer-sub-item">
+                        <ul class="computer-sub-item" th:id="'hotCategorySub_' + ${status.index}">
                             <li th:each="product:${categoryProducts.products}">
                                 <a >
                                     <img th:src="${product.thumbnailPath}">

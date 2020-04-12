@@ -1,5 +1,7 @@
 package cn.mnu.shopsite.control;
 
+import cn.mnu.shopsite.dao.CartDao;
+import cn.mnu.shopsite.dao.OrderDao;
 import cn.mnu.shopsite.dao.ProductDao;
 import cn.mnu.shopsite.dao.UserDao;
 import cn.mnu.shopsite.model.*;
@@ -7,10 +9,7 @@ import cn.mnu.shopsite.service.RecommendingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -26,6 +25,12 @@ public class RootController {
     private ProductDao productDao;
 
     @Autowired
+    private CartDao cartDao;
+
+    @Autowired
+    private OrderDao orderDao;
+
+    @Autowired
     private RecommendingService recommendingService;
 
     @RequestMapping("")
@@ -35,15 +40,7 @@ public class RootController {
 
     @RequestMapping("index")
     public String index(Model model) {
-        List<BrandProducts> brandNewProducts = recommendingService.queryBrandNewProducts(5);
-        List<CategoryProducts> categoryHotProducts = recommendingService.queryCategoryHotProducts(5);
-        List<Product> popProducts = recommendingService.queryPopProducts(9);
-        List<CategoryProducts> categoryNewProducts = recommendingService.queryCategoryNewProducts(8);
-
-        model.addAttribute("newProducts", brandNewProducts);
-        model.addAttribute("hotProducts", categoryHotProducts);
-        model.addAttribute("popList", popProducts);
-        model.addAttribute("allCategories", categoryNewProducts);
+        addNaviData(model);
         return "index";
     }
 
@@ -125,7 +122,32 @@ public class RootController {
         }
         else {
             model.addAttribute("product", product);
+            addNaviData(model);
             return "pro-desc";
         }
+    }
+
+    private void addNaviData(Model model) {
+        List<BrandProducts> brandNewProducts = recommendingService.queryBrandNewProducts(5);
+        List<CategoryProducts> categoryHotProducts = recommendingService.queryCategoryHotProducts(5);
+        List<Product> popProducts = recommendingService.queryPopProducts(9);
+        List<CategoryProducts> categoryNewProducts = recommendingService.queryCategoryNewProducts(8);
+
+        model.addAttribute("newProducts", brandNewProducts);
+        model.addAttribute("hotProducts", categoryHotProducts);
+        model.addAttribute("popList", popProducts);
+        model.addAttribute("allCategories", categoryNewProducts);
+    }
+
+    @RequestMapping("cart")
+    @ResponseBody
+    public List<CartItem> cart(@RequestParam String account) {
+        return cartDao.queryCart(account);
+    }
+
+    @RequestMapping("order")
+    @ResponseBody
+    public List<OrderItem> order(@RequestParam String account) {
+        return orderDao.queryAllOrders(account);
     }
 }

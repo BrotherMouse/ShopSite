@@ -27,11 +27,17 @@ $(document).ready(function(){
 $(document).ready(function(){
 
  $(".computer-item").mouseover(function(){
-    $(".computer-sub-item").show();
+    var itemId = this.id;
+    var index = itemId.substring(itemId.indexOf('_') + 1);
+    var subItemId = 'hotCategorySub_' + index;
+    $("#" + subItemId).show();
   });
 
   $(".computer-item").mouseout(function(){
-    $(".computer-sub-item").hide();
+    var itemId = this.id;
+        var index = itemId.substring(itemId.indexOf('_') + 1);
+        var subItemId = 'hotCategorySub_' + index;
+        $("#" + subItemId).hide();
   });
 
 });

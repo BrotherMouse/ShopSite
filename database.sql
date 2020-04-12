@@ -94,7 +94,7 @@ create table t_order_products (
   id int not null, #定单id，即t_order中的id
   product_id int not null, #商品id，即t_product中的id
   price decimal(10, 2), #成交价格
-  amount int, #数量
+  amount int, #购买数量
   primary key(id, product_id)
 );
 
@@ -136,9 +136,9 @@ insert into t_product_image values (5, 0, 'thumbnail', '/images/index/家电/mi/
 insert into t_product_image values (6, 0, 'thumbnail', '/images/index/computer/mi/15.6 GTX显卡 6299.jpg', null);
 insert into t_product_image values (6, 1, 'exhibit', '/images/mi/computer/Pro 15.6增强版/img1.jpg', null);
 insert into t_product_image values (6, 2, 'exhibit', '/images/mi/computer/Pro 15.6增强版/img2.jpg', null);
-insert into t_product_image values (6, 3, 'exhibit', '/images/mi/computer/Pro 15.6增强版/img3.jpg', null);
-insert into t_product_image values (6, 4, 'exhibit', '/images/mi/computer/Pro 15.6增强版/img4.jpg', null);
-insert into t_product_image values (6, 5, 'exhibit', '/images/mi/computer/Pro 15.6增强版/img5.jpg', null);
+insert into t_product_image values (6, 3, 'exhibit', '/images/mi/computer/Pro 15.6增强版/img3.png', null);
+insert into t_product_image values (6, 4, 'exhibit', '/images/mi/computer/Pro 15.6增强版/img4.png', null);
+insert into t_product_image values (6, 5, 'exhibit', '/images/mi/computer/Pro 15.6增强版/img5.png', null);
 insert into t_product_image values (6, 6, 'exhibit', '/images/mi/computer/Pro 15.6增强版/img6.jpg', null);
 insert into t_product_image values (6, 7, 'exhibit', '/images/mi/computer/Pro 15.6增强版/参数.jpg', null);
 insert into t_product_image values (7, 0, 'thumbnail', '/images/index/computer/lenovo/Thinkbook 13s 4299.jpg', null);
@@ -146,3 +146,16 @@ insert into t_product_image values (8, 0, 'thumbnail', '/images/index/computer/l
 insert into t_product_image values (9, 0, 'thumbnail', '/images/index/computer/lenovo/ThinkPad T490 13999.jpg', null);
 insert into t_product_image values (10, 0, 'thumbnail', '/images/index/computer/lenovo/ThinkPad X1 Yoga.jpg', null);
 insert into t_product_image values (11, 0, 'thumbnail', '/images/index/computer/lenovo/一体机.jpg', null);
+
+insert into t_cart values ('mouse', 1, 2);
+insert into t_cart values ('mouse', 2, 4);
+
+
+insert into values (1, 'mouse', '2020-02-28', 'done');
+insert into values (2, 'mouse', '2020-03-19', 'payed');
+
+insert into values (1, 3, 199.00, 3);
+insert into values (1, 4, 299.00, 2);
+insert into values (2, 5, 399.00, 4);
+insert into values (2, 6, 499.00, 1);
+insert into values (2, 7, 599.00, 5);
