@@ -36,14 +36,14 @@ public class AdminController {
         return "login";
     }
 
-    @RequestMapping("/addproduct")
+    @RequestMapping("/addProduct")
     public String addProduct(Model model) {
         List<ProductCategory> categories = productCategoryDao.getAllCategoriesInOrder();
         List<ProductBrand> brands = productBrandDao.getAllBrandsRanking();
 
         model.addAttribute("categories", categories);
         model.addAttribute("brands", brands);
-        return "upload";
+        return "addProduct";
     }
 
     @RequestMapping("/addproductinfo")
