@@ -41,3 +41,6 @@ window.onload = function() {
         oImg.style.top = -percentY * (oImg.offsetHeight - oBig.offsetHeight) + 'px';
     };
 };
+
+//加入购物车
+

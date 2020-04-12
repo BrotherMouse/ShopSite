@@ -36,6 +36,10 @@
 	height: 120px;
 	border-bottom: 1px solid #333;
 }
+#desc-list #list-item #select{
+	float: left;
+	margin-top:40px;
+}
 #desc-list #list-img{
 	display: inline-block;
 	width: 500px;

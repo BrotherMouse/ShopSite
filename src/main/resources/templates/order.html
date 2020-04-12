@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+	<title>订单</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="css/fonts.css">
+	<link rel="stylesheet" type="text/css" href="css/order.css">
+	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+</head>
+<body>
+<div class="fix">
+    <ul>
+        <li id="top">
+            <a href="#">
+                <i class="iconfont">&#xe6cc;</i>
+                <p>回到顶部</p>
+            </a>
+        </li>
+          <li>
+            <a href="#">
+                <i class="iconfont">&#xe600;</i>
+                <p>购物车</p>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="iconfont">&#xe602;</i>
+                <p>收藏</p>
+            </a>
+        </li>
+          <li id="bottom">
+            <a href="#">
+                <i class="iconfont">&#xe64c;</i>
+                <p>回到底部</p>
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- 顶部栏 -->
+<div class="topBar">
+	<div class="container">
+		<div class="topBar-left">
+			<a href="#">
+				<i class="iconfont">&#xe61d;</i>
+				欢迎来到购物商城！
+			</a>		
+		</div>
+		<div class="topBar-right">
+			<a href="file:///G:/shop_site/index.html">
+				<i class="iconfont">&#xe601;</i>
+				首页	
+			</a>
+			<span>|</span>
+			<a href="file:///G:/shop_site/login.html" target="_blank" >
+				<i class="iconfont">&#xe608;</i>
+				登录
+			</a>
+			<span>|</span>
+			<a href="file:///G:/shop_site/register.html" target="_blank">
+				<i class="iconfont">&#xe6ad;</i>
+				注册
+			</a>
+		</div>
+	</div>
+</div>
+<!-- 导航栏 -->
+<div class="nav">
+	<div class="container">
+		<div class="site-logo">
+			<a href="#">
+				<img src="images/index/logo.jpg" alt="LOGO">
+			</a>
+		</div>
+		<div class="nav-ensure">
+		    <span>
+				<i class="iconfont">&#xe712;
+				</i>
+				100%正品
+			</span>
+			<span>
+			    <i class="iconfont">&#xe603;
+			    </i>
+				七天无理由退换货
+			</span>
+		</div>
+		<div class="nav-search">
+			<form action="">
+				<input type="text" class="search-text">
+				<i class="iconfont">&#xe605;</i>
+			</form>
+		</div>
+		<div class="nav-shopCar">
+			<ul>
+				<li>
+					<a href="#">
+					    <i class="iconfont">&#xe600;</i>
+					    <span>购物车</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+					    <i class="iconfont">&#xe604;</i>
+					    <span>订单</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+					    <i class="iconfont">&#xe602;</i>
+					    <span>收藏</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>	
+</div>
+<!-- 订单详情 -->
+<div id="order-desc">
+	<div class="container">
+		<div id="slideBar">
+	        <ul>
+			    <li><a href=""><img src="images/index/家电/mi/空调/米家大1.5匹 C1A 2299.jpg"></a></li>
+			    <li><a href=""><img src="images/index/家电/mi/洗衣机/米家变频10公斤滚桶烘干 1999.jpg"></a></li>
+			    <li><a href=""><img src="images/index/家电/Samsung/电视/三星 QA55Q60RAJXXZ 55英寸QLED量子点4KHDR智能液晶电视 6299.jpg"></a></li>
+			    <li><a href=""><img src="images/index/家电/mi/小米盒子/米家激光投影电视150寸 4K  10999.jpg"></a></li>
+			    <li><a href=""><img src="images/index/家电/Samsung/空调/三星空调 1匹P变频  壁挂式 节能卧室挂机家用  7200.jpg"></a></li>
+			    <li><a href=""><img src="images/index/家电/Samsung/冰箱/三星 RS55KBHI0WW SC 双开门冰箱双循环大容量家用对开门 3999.jpg"></a></li>
+			    <li><a href=""><img src="images/index/家电/mi/电视/小米 4A40  40寸  1099.jpg"></a></li>
+			    <li><a href=""><img src="images/index/家电/mi/洗衣机/米家洗烘一体8公斤滚桶 1799.jpg"></a></li>
+		    </ul>
+	    </div>
+	    
+		   
+		<div id="order-item">
+		    <span>全部订单</span>
+		    <ul th:each="orderItem:${order}">
+		    	<li th:each="product:${orderItem.products}">
+		    	    <img th:src="${product.thumbnailPath}">
+		    	 	<span th:text="${product.name}">cedfew</span>
+		    	 	<button id="del">删除</button>
+		    	 	<div id="price-in">
+		    	 		实付金额：<span id="price" th:text="${product.price}">￥100</span>元
+		    	 	</div>
+		    	 </li>
+		    </ul>
+		</div>
+	    
+	</div>
+	
+</div>
+</body>

@@ -151,11 +151,11 @@ insert into t_cart values ('mouse', 1, 2);
 insert into t_cart values ('mouse', 2, 4);
 
 
-insert into values (1, 'mouse', '2020-02-28', 'done');
-insert into values (2, 'mouse', '2020-03-19', 'payed');
+insert into t_order values (1, 'mouse', '2020-02-28', 'done');
+insert into t_order values (2, 'mouse', '2020-03-19', 'payed');
 
-insert into values (1, 3, 199.00, 3);
-insert into values (1, 4, 299.00, 2);
-insert into values (2, 5, 399.00, 4);
-insert into values (2, 6, 499.00, 1);
-insert into values (2, 7, 599.00, 5);
+insert into t_order_products values (1, 3, 199.00, 3);
+insert into t_order_products values (1, 4, 299.00, 2);
+insert into t_order_products values (2, 5, 399.00, 4);
+insert into t_order_products values (2, 6, 499.00, 1);
+insert into t_order_products values (2, 7, 599.00, 5);

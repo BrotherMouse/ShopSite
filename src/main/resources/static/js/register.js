@@ -119,7 +119,7 @@ function checkPhone(){
  			alert("提交失败");
  			return;
  		}
-// register.aspx  InsertUserInfo(UserID, UserPwd)
+
  		$.ajax({
  			type: "post",
  			url: "/registeruser",
