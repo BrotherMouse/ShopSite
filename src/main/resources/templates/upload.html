@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
 </head>
 <body>
   <span>商品编号</span><input type="text" id="productId"/><br>
-  <span>商品分类</span><input type="text" id="categoryId"/><br>
-  <span>商品品牌</span><input type="text" id="brandId"/><br>
+  <select id="categoryId">
+    <option th:each="category:${categories}" th:value="${category.id}" th:text="${category.name}">
+      商品分类
+    </option>
+  </select><br>
+  <select id="brandId">
+    <option th:each="brand:${brands}" th:value="${brand.id}" th:text="${brand.name}">
+      商品品牌
+    </option>
+  </select><br>
   <span>商品名称</span><input type="text" id="name"/><br>
   <span>商品价格</span><input type="text" id="price"/><br>
   <span>促销价格</span><input type="text" id="salePrice"/><br>
@@ -48,7 +56,7 @@
       formData.append("description", description);
       $.ajax({
         type : "post",
-        url : "/addproduct",
+        url : "/admin/addproductinfo",
         data : formData,
         processData : false,
         contentType : false,
@@ -86,7 +94,7 @@
         return false;
       }
 
-      var reg = new RegExp("(.jpg|.png|.jpeg)$");
+      var reg = new RegExp("(.jpg|.png|.jpeg|.gif|.bmp)$");
       var fileName, fileSize;
       for(var index = 0; index < fileObj[0].files.length; index++) {
         //检查文件格式
@@ -112,7 +120,7 @@
       formData.append("type", type); //图片类型
       $.ajax({
         type : "post",
-        url : "/uploadimages",
+        url : "/admin/uploadimages",
         data : formData,
         processData : false,
         contentType : false,
