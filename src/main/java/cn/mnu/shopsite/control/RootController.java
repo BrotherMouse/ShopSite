@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -223,30 +222,88 @@ public class RootController {
     }
 
     @RequestMapping("upload")
+    public String upload() {
+        return "upload";
+    }
+
+    @RequestMapping("uploadimages")
+    @ResponseBody
     public Map<String, Object> uploadImages(HttpServletRequest request) throws IllegalStateException, IOException {
         Map<String, Object> ret = new HashMap<>();
 
-        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
-                request.getSession().getServletContext());
-
-        if(multipartResolver.isMultipart(request)) {
-            ret.put("result", "NoFiles");
-            return ret;
+        try {
+            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+            saveFile(multiRequest);
+            ret.put("result", "Success");
+        }
+        catch(ClassCastException classException) {
+            ret.put("result", "NotAFileUploadRequest");
+        }
+        catch(Exception ex) {
+            ret.put("result", "SaveFileFail");
         }
 
-        MultipartHttpServletRequest multiRequest=(MultipartHttpServletRequest)request;
-        Iterator<String> iterator = multiRequest.getFileNames();
+        return ret;
+    }
+
+    private String saveFile(MultipartHttpServletRequest request) throws IOException {
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        String type = request.getParameter("type");
+
+        Iterator<String> iterator = request.getFileNames();
         while(iterator.hasNext()) {
-            MultipartFile file=multiRequest.getFile(iterator.next());
+            MultipartFile file = request.getFile(iterator.next());
             if(file == null) {
                 continue;
             }
 
-            String path = "D:/ProductImages/" + file.getOriginalFilename();
-            file.transferTo(new File(path));
+            String filePureName = getFilePureName(file.getOriginalFilename());
+            String uuidFileName = generateUuidImageFileName(file.getOriginalFilename());
+
+            file.transferTo(new File("D:/ProductImages/" + uuidFileName));
+
+            productDao.addProductImage(productId, type, uuidFileName, filePureName);
         }
 
+        return "Success";
+    }
+
+    private String getFilePureName(String filePath) {
+        int unixSep = filePath.lastIndexOf('/');
+        int winSep = filePath.lastIndexOf('\\');
+
+        int pos = Math.max(winSep, unixSep);
+        if(pos < 0) {
+            return filePath;
+        }
+        else {
+            return filePath.substring(pos + 1);
+        }
+    }
+
+    private String generateUuidImageFileName(String fileName) {
+        String fileType;
+        int dotPosition = fileName.lastIndexOf('.');
+        if(dotPosition < 0) {
+            fileType = ".jpg";
+        }
+        else {
+            fileType = fileName.substring(dotPosition);
+        }
+
+        return UUID.randomUUID().toString().replaceAll("-", "") + fileType;
+    }
+
+    @RequestMapping("addproduct")
+    @ResponseBody
+    public Map<String, Object> addProduct(Product product) {
+        Map<String, Object> ret = new HashMap<>();
+
+        productDao.addProduct(product);
+
         ret.put("result", "Success");
+        ret.put("productId", product.getId());
+
         return ret;
     }
 }

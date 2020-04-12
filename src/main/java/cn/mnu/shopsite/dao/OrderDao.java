@@ -64,7 +64,7 @@ public class OrderDao {
         return items;
     }
 
-    public void addOrder(String account, OrderItem order) {
+    public boolean addOrder(String account, OrderItem order) {
         String maxIdString = "select IfNull(Max(id), 0) from t_order";
         String insertOrderSql = "insert into t_order values (?, ?, ?, ?)";
         String insertOrderProductsSql = "insert into t_order_products (?, ?, ?, ?)";
@@ -85,11 +85,12 @@ public class OrderDao {
         }
 
         if(tryTimes <= 0) {
-            return;
+            return false;
         }
 
         for(OrderedProduct product : order.getProducts()) {
             jdbcTemplate.update(insertOrderProductsSql, id, product.getId(), product.getPrice(), product.getAmount());
         }
+        return true;
     }
 }

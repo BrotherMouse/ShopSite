@@ -1,7 +1,9 @@
 package cn.mnu.shopsite.dao;
 
+import cn.mnu.shopsite.model.OrderedProduct;
 import cn.mnu.shopsite.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -13,6 +15,8 @@ import java.util.List;
 
 @Repository
 public class ProductDao {
+    private static final int TRY_TIMES = 10;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -61,7 +65,7 @@ public class ProductDao {
      * @param product 商品信息
      */
     private void setProductImagePath(Product product) {
-        String sql = "select * from t_product_image where id = ? order by sequence";
+        String sql = "select * from t_product_images where id = ? order by sequence";
         List<String> exhibitPaths = new ArrayList<>();
         jdbcTemplate.query(sql, rs -> {
             String imagePath = rs.getString("path");
@@ -127,5 +131,52 @@ public class ProductDao {
         String sql = "select * from t_product order by (purchase_amount - stock_balance) desc limit ?";
 
         return jdbcTemplate.query(sql, rowMapper, n);
+    }
+
+    public boolean addProduct(Product product) {
+        String maxIdString = "select IfNull(Max(id), 0) from t_product";
+        String insertOrderSql = "insert into t_product values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        int tryTimes = TRY_TIMES;
+        while(tryTimes-- > 0) {
+            Integer maxId = jdbcTemplate.queryForObject(maxIdString, Integer.class);
+            int id = maxId == null ? 1 : maxId + 1;
+
+            try {
+                jdbcTemplate.update(insertOrderSql, id, product.getCategoryId(), product.getBrandId(),
+                        product.getName(), product.getPrice(), product.getSalePrice(), product.getPurchasedAmount(),
+                        product.getStockBalance(), product.getListingDate(), product.getDescription(), null);
+                product.setId(id);
+                return true;
+            }
+            catch(DataAccessException ex) {
+                ;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean addProductImage(int productId, String type, String fileName, String originalName) {
+        String maxSequenceString = "select IfNull(Max(sequence), 0) from t_product_images where id = ?";
+        String insertOrderSql = "insert into t_product_images values (?, ?, ?, ?, ?, ?)";
+
+        String path = "/pimages/" + fileName;
+
+        int tryTimes = TRY_TIMES;
+        while(tryTimes-- > 0) {
+            Integer maxSequence = jdbcTemplate.queryForObject(maxSequenceString, Integer.class, productId);
+            int sequence = maxSequence == null ? 1 : maxSequence + 1;
+
+            try {
+                jdbcTemplate.update(insertOrderSql, productId, sequence, type, path, originalName, null);
+                return true;
+            }
+            catch(DataAccessException ex) {
+                ;
+            }
+        }
+
+        return false;
     }
 }
