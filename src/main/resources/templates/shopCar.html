@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+	<title>购物车</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="css/fonts.css">
+	<link rel="stylesheet" type="text/css" href="css/shopCar.css">
+	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+</head>
+<body>
+<div class="fix">
+    <ul>
+        <li id="top">
+            <a href="#">
+                <i class="iconfont">&#xe6cc;</i>
+                <p>回到顶部</p>
+            </a>
+        </li>
+          <li>
+            <a href="#">
+                <i class="iconfont">&#xe600;</i>
+                <p>购物车</p>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="iconfont">&#xe602;</i>
+                <p>收藏</p>
+            </a>
+        </li>
+          <li id="bottom">
+            <a href="#">
+                <i class="iconfont">&#xe64c;</i>
+                <p>回到底部</p>
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- 顶部栏 -->
+<div class="topBar">
+	<div class="container">
+		<div class="topBar-left">
+			<a href="#">
+				<i class="iconfont">&#xe61d;</i>
+				欢迎来到购物商城！
+			</a>		
+		</div>
+		<div class="topBar-right">
+			<a href="file:///G:/shop_site/index.html">
+				<i class="iconfont">&#xe601;</i>
+				首页	
+			</a>
+			<span>|</span>
+			<a href="file:///G:/shop_site/login.html" target="_blank" >
+				<i class="iconfont">&#xe608;</i>
+				登录
+			</a>
+			<span>|</span>
+			<a href="file:///G:/shop_site/register.html" target="_blank">
+				<i class="iconfont">&#xe6ad;</i>
+				注册
+			</a>
+		</div>
+	</div>
+</div>
+<!-- 导航栏 -->
+<div class="nav">
+	<div class="container">
+		<div class="site-logo">
+			<a href="#">
+				<img src="images/index/logo.jpg" alt="LOGO">
+			</a>
+		</div>
+		<div class="nav-ensure">
+		    <span>
+				<i class="iconfont">&#xe712;
+				</i>
+				100%正品
+			</span>
+			<span>
+			    <i class="iconfont">&#xe603;
+			    </i>
+				七天无理由退换货
+			</span>
+		</div>
+		<div class="nav-search">
+			<form action="">
+				<input type="text" class="search-text">
+				<i class="iconfont">&#xe605;</i>
+			</form>
+		</div>
+		<div class="nav-shopCar">
+			<ul>
+				<li>
+					<a href="#">
+					    <i class="iconfont">&#xe600;</i>
+					    <span>购物车</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+					    <i class="iconfont">&#xe604;</i>
+					    <span>订单</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+					    <i class="iconfont">&#xe602;</i>
+					    <span>收藏</span>
+					</a>
+				</li>
+			</ul>
+		</div>	
+
+<!--购物车详情  -->
+<div class="shopCar-desc">
+	<div class="container">
+		<div class="shopCar-hd">
+			<span>全部商品</span>
+			<ul>
+				<li>单价</li>
+				<li style="width: 107px; padding-left: 13px;">数量</li>
+				<li>小计</li>
+				<li>操作</li>
+			</ul>
+		</div>
+		<div id="desc-list">
+			<div id="list-item"  th:each="cartItem:${cart}">
+				<form>
+					<input type="checkbox" name="" id="select">
+				</form>
+				<a href="#" id="list-img">
+				<img th:src="${cartItem.product.thumbnailPath}">
+				<span th:text="${cartItem.product.name} + ',' + ${cartItem.product.description}">cdsgfv</span>
+			    </a>
+			    <ul>
+				    <li>
+					    ￥<span id="price" th:text="${cartItem.product.salePrice}"></span>
+				    </li>
+				    <li>
+					    <button id="sub">-</button>
+					    <input type="text" id="quantity" value="1" th:text="${cartItem.product.purchasedAmount}">
+						<button id="add">+</button>
+				    </li>
+				    <li>
+					    ￥<span id="sum-price"></span>
+				    </li>
+				    <li>
+						<button id="delete">删除</button>
+				    </li>
+			    </ul>
+			</div>
+			<div id="pay">
+				<div id="pay-price">
+					<span>
+						共<span id="number" style="color: red;" th:text="${cartItem.product.purchasedAmount}"></span>件商品 总金额￥<span class="sum-price" style="color: red;" th:text="${cartItem.product.sumPrice}">1666</span>
+					</span>
+				</div>
+				<div id="payBtn">
+					<input type="submit" value="立即结算">
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+
+<!-- 脚部 -->
+<div class="footer">
+	<div class="container">
+		<div class="footer-top">
+			<ul>
+				<li>
+					<i class="iconfont">&#xe61f;</i>
+					<span>正品保障</span>
+				</li>
+				<li>
+					<i class="iconfont" >&#xe61e;</i>
+					<span>满199包邮</span>
+				</li>
+				<li>
+					<i class="iconfont">&#xe744;</i>
+					<span>售后无忧</span>
+				</li>
+				<li>
+					<i class="iconfont">&#xe743;</i>
+					<span>准时送达</span>
+				</li>
+			</ul>
+		</div>
+		<div class="footer-bottom">
+			<div class="bottom-left">
+				<dl>
+				    <dt>帮助中心</dt>
+				    <dd><a href="#">账户管理</a></dd>
+				    <dd><a href="#">订单操作</a></dd>
+				    <dd><a href="#">购物车</a></dd>
+			    </dl>
+			    <dl>
+				    <dt>服务支持</dt>
+				    <dd><a href="#">售后政策</a></dd>
+				    <dd><a href="#">自动服务</a></dd>
+				    <dd><a href="#">相关下载</a></dd>
+			    </dl>
+			    <dl>
+				    <dt>线下门店</dt>
+				    <dd><a href="#">购物之家</a></dd>
+				    <dd><a href="#">服务网点</a></dd>
+				    <dd><a href="#">授权体验店</a></dd>
+			    </dl>
+			    <dl>
+				    <dt>关注我们</dt>
+				    <dd><a href="#">官方微信</a></dd>
+				    <dd><a href="#">新浪微博</a></dd>
+				    <dd><a href="#">联系我们</a></dd>
+			    </dl>
+			</div>
+			<div class="bottom-right">
+				<p class="phone">400-100-5678</p>
+                <p >周一至周日 8:00
+                    -18:00
+                  <br>
+               （仅收市话费）
+
+                </p>
+                <a href="#">
+                     <i class="iconfont"></i>
+                     人工客服
+                </a>
+			</div>
+		</div>
+		<div class="beian">
+			<a href="#">川ICP备1605009607号</a>
+			<span>|</span>
+			<a href="#">经营证照</a>
+			<span>|</span>
+			<a href="#">川B2-20170729</a>
+			<span>|</span>
+			<a href="#">川公网安备 31010502002939号</a>
+			<span>|</span>
+			<a href="#">出版物经营许可证</a>
+			<span>|</span>
+			<a href="#">增值电信业务经营许可证</a>
+			<span>|</span>
+			<p>Copyright© 网上购物商城</p>
+		</div>
+	</div>
+</div>
+</body>
+</html>
