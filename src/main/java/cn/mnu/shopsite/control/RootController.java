@@ -10,11 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 @Controller
 public class RootController {
@@ -139,15 +143,110 @@ public class RootController {
         model.addAttribute("allCategories", categoryNewProducts);
     }
 
-    @RequestMapping("cart")
+    @RequestMapping("addtocart")
     @ResponseBody
-    public List<CartItem> cart(@RequestParam String account) {
-        return cartDao.queryCart(account);
+    public Map<String, Object> addToCart(HttpSession session, @RequestBody Map<String, String> info) {
+        Map<String, Object> ret = new HashMap<>();
+
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            ret.put("result", "NotLogin");
+            return ret;
+        }
+
+        int productId = Integer.parseInt(info.get("productId"));
+        int amount = Integer.parseInt(info.get("amount"));
+
+        cartDao.addProductToCart(user.getAccount(), productId, amount);
+
+        ret.put("result", "Success");
+        return ret;
+    }
+
+    @RequestMapping("cart")
+    public String cart(HttpSession session, Model model) {
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            return "redirect:login";
+        }
+
+        List<CartItem> cartItems = cartDao.queryCart(user.getAccount());
+        model.addAttribute("cart", cartItems);
+        addNaviData(model);
+
+        return "cart";
+    }
+
+    @RequestMapping("generateorder")
+    @ResponseBody
+    public Map<String, Object> generateOrder(HttpSession session, @RequestBody List<Map<String, String>> productsOrder) {
+        Map<String, Object> ret = new HashMap<>();
+
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            ret.put("result", "NotLogin");
+            return ret;
+        }
+
+        OrderItem order = new OrderItem(0, new ArrayList<>(), new Date(), "ordered");
+        for(Map<String, String> productOrder : productsOrder) {
+            int productId = Integer.parseInt(productOrder.get("productId"));
+            int amount = Integer.parseInt(productOrder.get("amount"));
+
+            Product productInfo = productDao.queryProduct(productId);
+            if(productInfo == null) {
+                ret.put("result", "IllegalProductId");
+                return ret;
+            }
+
+            OrderedProduct product = new OrderedProduct(productInfo, amount);
+            order.getProducts().add(product);
+        }
+
+        orderDao.addOrder(user.getAccount(), order);
+
+        ret.put("result", "Success");
+        return ret;
     }
 
     @RequestMapping("order")
-    @ResponseBody
-    public List<OrderItem> order(@RequestParam String account) {
-        return orderDao.queryAllOrders(account);
+    public String order(HttpSession session, Model model) {
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            return "redirect:login";
+        }
+
+        List<OrderItem> orderItems = orderDao.queryAllOrders(user.getAccount());
+        model.addAttribute("order", orderItems);
+        addNaviData(model);
+        return "order";
+    }
+
+    @RequestMapping("upload")
+    public Map<String, Object> uploadImages(HttpServletRequest request) throws IllegalStateException, IOException {
+        Map<String, Object> ret = new HashMap<>();
+
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
+                request.getSession().getServletContext());
+
+        if(multipartResolver.isMultipart(request)) {
+            ret.put("result", "NoFiles");
+            return ret;
+        }
+
+        MultipartHttpServletRequest multiRequest=(MultipartHttpServletRequest)request;
+        Iterator<String> iterator = multiRequest.getFileNames();
+        while(iterator.hasNext()) {
+            MultipartFile file=multiRequest.getFile(iterator.next());
+            if(file == null) {
+                continue;
+            }
+
+            String path = "D:/ProductImages/" + file.getOriginalFilename();
+            file.transferTo(new File(path));
+        }
+
+        ret.put("result", "Success");
+        return ret;
     }
 }

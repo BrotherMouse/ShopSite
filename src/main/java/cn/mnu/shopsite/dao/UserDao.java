@@ -57,7 +57,7 @@ public class UserDao {
         String sql = "insert into t_user values (?, ?, ?, ?)";
 
         try {
-            jdbcTemplate.update(sql, user.getAccount(), user.getName(), user.getPassword(), user.getSex());
+            jdbcTemplate.update(sql, user.getAccount(), user.getPassword(), user.getName(), user.getSex());
             return true;
         }
         catch(DataAccessException ex) {

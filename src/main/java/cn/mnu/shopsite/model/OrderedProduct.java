@@ -60,4 +60,17 @@ public class OrderedProduct {
      * 展示图（多张）路径
      */
     private List<String> exhibitPaths;
+
+    public OrderedProduct(Product product, int amount) {
+        this.id = product.getId();
+        this.categoryId = product.getCategoryId();
+        this.brandId = product.getBrandId();
+        this.name = product.getName();
+        this.price = product.getSalePrice();
+        this.amount = amount;
+        this.listingDate = product.getListingDate();
+        this.description = product.getDescription();
+        this.thumbnailPath = product.getThumbnailPath();
+        this.exhibitPaths = product.getExhibitPaths();
+    }
 }
