@@ -3,9 +3,9 @@ package cn.mnu.shopsite.control;
 import cn.mnu.shopsite.dao.*;
 import cn.mnu.shopsite.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +20,9 @@ import java.util.*;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    @Value("${product.images}")
+    private String productImagesPath;
+
     @Autowired
     private UserDao userDao;
 
@@ -98,7 +101,12 @@ public class AdminController {
     }
 
     @RequestMapping("/management")
-    public String addProduct(Model model) {
+    public String addProduct(HttpSession session, Model model) {
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            return "redirect:login";
+        }
+
         List<ProductCategory> categories = productCategoryDao.getAllCategoriesInOrder();
         List<ProductBrand> brands = productBrandDao.getAllBrandsRanking();
         List<Product> products = productDao.getAllProduct();
@@ -113,8 +121,14 @@ public class AdminController {
 
     @RequestMapping("/addCategory")
     @ResponseBody
-    public Map<String, Object> addCategory(ProductCategory category) {
+    public Map<String, Object> addCategory(HttpSession session, ProductCategory category) {
         Map<String, Object> ret = new HashMap<>();
+
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            ret.put("result", "NotLogin");
+            return ret;
+        }
 
         boolean success = productCategoryDao.addCategory(category);
         if(success) {
@@ -129,8 +143,14 @@ public class AdminController {
 
     @RequestMapping("/deleteCategory")
     @ResponseBody
-    public Map<String, Object> deleteCategory(ProductCategory category) {
+    public Map<String, Object> deleteCategory(HttpSession session, ProductCategory category) {
         Map<String, Object> ret = new HashMap<>();
+
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            ret.put("result", "NotLogin");
+            return ret;
+        }
 
         productCategoryDao.deleteCategory(category);
         ret.put("result", "Success");
@@ -140,8 +160,14 @@ public class AdminController {
 
     @RequestMapping("/addBrand")
     @ResponseBody
-    public Map<String, Object> addBrand(ProductBrand brand) {
+    public Map<String, Object> addBrand(HttpSession session, ProductBrand brand) {
         Map<String, Object> ret = new HashMap<>();
+
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            ret.put("result", "NotLogin");
+            return ret;
+        }
 
         boolean success = productBrandDao.addBrand(brand);
         if(success) {
@@ -156,8 +182,14 @@ public class AdminController {
 
     @RequestMapping("/deleteBrand")
     @ResponseBody
-    public Map<String, Object> deleteBrand(ProductBrand brand) {
+    public Map<String, Object> deleteBrand(HttpSession session, ProductBrand brand) {
         Map<String, Object> ret = new HashMap<>();
+
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            ret.put("result", "NotLogin");
+            return ret;
+        }
 
         productBrandDao.deleteBrand(brand);
         ret.put("result", "Success");
@@ -167,8 +199,14 @@ public class AdminController {
 
     @RequestMapping("/addProductInfo")
     @ResponseBody
-    public Map<String, Object> addProductInfo(Product product) {
+    public Map<String, Object> addProductInfo(HttpSession session, Product product) {
         Map<String, Object> ret = new HashMap<>();
+
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            ret.put("result", "NotLogin");
+            return ret;
+        }
 
         productDao.addProduct(product);
 
@@ -180,8 +218,15 @@ public class AdminController {
 
     @RequestMapping("/uploadImages")
     @ResponseBody
-    public Map<String, Object> uploadImages(HttpServletRequest request) throws IllegalStateException, IOException {
+    public Map<String, Object> uploadImages(HttpSession session, HttpServletRequest request)
+            throws IllegalStateException, IOException {
         Map<String, Object> ret = new HashMap<>();
+
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            ret.put("result", "NotLogin");
+            return ret;
+        }
 
         try {
             MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
@@ -212,7 +257,12 @@ public class AdminController {
             String filePureName = getFilePureName(file.getOriginalFilename());
             String uuidFileName = generateUuidImageFileName(file.getOriginalFilename());
 
-            file.transferTo(new File("D:/ProductImages/" + uuidFileName));
+            File dir = new File(productImagesPath);
+            if(!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            file.transferTo(new File(productImagesPath + uuidFileName));
 
             productDao.addProductImage(productId, type, uuidFileName, filePureName);
         }
@@ -248,8 +298,14 @@ public class AdminController {
 
     @RequestMapping("/deleteProduct")
     @ResponseBody
-    public Map<String, Object> deleteProduct(Product product) {
+    public Map<String, Object> deleteProduct(HttpSession session, Product product) {
         Map<String, Object> ret = new HashMap<>();
+
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            ret.put("result", "NotLogin");
+            return ret;
+        }
 
         productDao.deleteProduct(product);
         ret.put("result", "Success");
@@ -259,8 +315,14 @@ public class AdminController {
 
     @RequestMapping("/addAdvertisement")
     @ResponseBody
-    public Map<String, Object> addAdvertisement(Advertisement advertisement) {
+    public Map<String, Object> addAdvertisement(HttpSession session, Advertisement advertisement) {
         Map<String, Object> ret = new HashMap<>();
+
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            ret.put("result", "NotLogin");
+            return ret;
+        }
 
         boolean success = advertisementDao.addAdvertisement(advertisement);
         if(success) {
@@ -275,8 +337,14 @@ public class AdminController {
 
     @RequestMapping("/deleteAdvertisement")
     @ResponseBody
-    public Map<String, Object> deleteAdvertisement(Advertisement advertisement) {
+    public Map<String, Object> deleteAdvertisement(HttpSession session, Advertisement advertisement) {
         Map<String, Object> ret = new HashMap<>();
+
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            ret.put("result", "NotLogin");
+            return ret;
+        }
 
         advertisementDao.deleteAdvertisement(advertisement);
         ret.put("result", "Success");

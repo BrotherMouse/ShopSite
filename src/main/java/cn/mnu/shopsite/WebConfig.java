@@ -1,14 +1,18 @@
 package cn.mnu.shopsite;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+    @Value("${product.images}")
+    private String productImagesPath;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/pimages/**").addResourceLocations("file:/D:/ProductImages/");
+        registry.addResourceHandler("/pimages/**").addResourceLocations("file:/" + productImagesPath);
         WebMvcConfigurer.super.addResourceHandlers(registry);
     }
 }

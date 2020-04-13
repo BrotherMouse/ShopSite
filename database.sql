@@ -104,54 +104,24 @@ create table t_order_products (
   primary key(id, product_id)
 );
 
-insert into t_product_brand values ('Apple', '苹果', 4, null);
-insert into t_product_brand values ('Asus', '华硕', 7, null);
-insert into t_product_brand values ('Dell', '戴尔', 5, null);
-insert into t_product_brand values ('Hp', '惠普', 10, null);
-insert into t_product_brand values ('Huawei', '华为', 3, null);
-insert into t_product_brand values ('Lenovo', '联想', 2, null);
-insert into t_product_brand values ('Meizu', '魅族', 8, null);
-insert into t_product_brand values ('Oneplus', '一加', 9, null);
-insert into t_product_brand values ('Samsung', '三星', 6, null);
-insert into t_product_brand values ('Xiaomi', '小米', 1, null);
+/******测试数据*****/
+insert into t_product_brand values ('apple', '苹果', 4, null);
+insert into t_product_brand values ('asus', '华硕', 7, null);
+insert into t_product_brand values ('dell', '戴尔', 5, null);
+insert into t_product_brand values ('hp', '惠普', 10, null);
+insert into t_product_brand values ('huawei', '华为', 3, null);
+insert into t_product_brand values ('lenovo', '联想', 2, null);
+insert into t_product_brand values ('meizu', '魅族', 8, null);
+insert into t_product_brand values ('oneplus', '一加', 9, null);
+insert into t_product_brand values ('samsung', '三星', 6, null);
+insert into t_product_brand values ('xiaomi', '小米', 1, null);
 
-insert into t_product_category values ('Accessory', '配件', '丰富生活日常', '/images/index/phone/phone-left.jpg', 5, null);
-insert into t_product_category values ('Cellphone', '手机', '让我们变得更近', '/images/index/phone/phone-left.jpg', 2, null);
-insert into t_product_category values ('Computer', '电脑', '科技改变生活', '/images/index/computer/computer-left.jpg', 1, null);
-insert into t_product_category values ('HomeAppliance', '家电', '成为你的必需', '/images/index/家电/appliance-left.jpg', 3, null);
-insert into t_product_category values ('Life', '生活', '生活更有滋味', '/images/index/phone/phone-left.jpg', 6, null);
-insert into t_product_category values ('Wearing', '穿戴', '为生活增添乐趣', '/images/index/phone/phone-left.jpg', 4, null);
-
-insert into t_product values (1, 'Cellphone', 'Xiaomi', 'Redmi Note8 Pro', 1299.00, 1099.00, 1000, 123, '2020-01-01', '', null);
-insert into t_product values (2, 'HomeAppliance', 'Xiaomi', '小米电视', 8999.00, 7999.00, 1000, 231, '2020-01-02', '', null);
-insert into t_product values (3, 'Computer', 'Xiaomi', '小米电脑', 4299.00, 4199.00, 1000, 321, '2020-01-03', '', null);
-insert into t_product values (4, 'HomeAppliance', 'Xiaomi', '小米洗衣机', 1999.00, 1900.00, 1000, 300, '2020-01-04', '', null);
-insert into t_product values (5, 'HomeAppliance', 'Xiaomi', '小米空调', 1799.00, 1700.00, 1000, 111, '2020-01-05', '', null);
-insert into t_product values (6, 'Computer', 'Xiaomi', '小米Pro 15.6" GTX显卡', 6299.00, 6000.00, 1000, 136, '2020-01-06', '全新第八代英特尔酷睿处理器 ／ 升级金属双风扇 ／ 带宽提升80% ／ 15.6"全高清大屏超窄边大视野', null);
-insert into t_product values (7, 'Computer', 'Lenovo', 'Thinkbook 13s', 4299.00, 4199.00, 1000, 400, '2020-01-06', '', null);
-insert into t_product values (8, 'Computer', 'Lenovo', 'ThinkBook 14s', 5299.00, 5099.00, 1000, 99, '2020-01-07', '', null);
-insert into t_product values (9, 'Computer', 'Lenovo', 'ThinkPad T490', 13999.00, 10999.00, 1000, 192, '2020-01-08', '', null);
-insert into t_product values (10, 'Computer', 'Lenovo', 'ThinkPad X1 Yoga', 16899.00, 16000.00, 1000, 399, '2020-01-09', '', null);
-insert into t_product values (11, 'Computer', 'Lenovo', '一体机', 23499.00, 20499.00, 1000, 765, '2020-01-10', '', null);
-
-insert into t_product_images values (1, 1, 'thumbnail', '/pimages/27335c1d54514f1cbe3cdfcd4a07a69d.jpg', 'Redmi Note8 Pro 1299.jpg', null);
-insert into t_product_images values (2, 1, 'thumbnail', '/pimages/2dab3d681934428f8cdbe8aa2a1ff2d2.jpg', '小米 4-75 75寸 8999.jpg', null);
-insert into t_product_images values (3, 1, 'thumbnail', '/pimages/95aaaac62b2347158f0c854aa463f910.jpg', '15.6极限版 4299.jpg', null);
-insert into t_product_images values (4, 1, 'thumbnail', '/pimages/d19277ed65304fabb0dba3c3bc40f271.jpg', '米家变频10公斤滚桶烘干 1999.jpg', null);
-insert into t_product_images values (5, 1, 'thumbnail', '/pimages/240034181201460a9a726fa0c5185fca.jpg', '米家1.5P 1799.jpg', null);
-insert into t_product_images values (6, 1, 'thumbnail', '/pimages/4b7d1d1ebf874e81a2f42dcb39f0a07d.jpg', '15.6 GTX显卡 6299.jpg', null);
-insert into t_product_images values (6, 2, 'exhibit', '/pimages/406aadc615ac449f9e668511ab535465.jpg', 'img1.jpg', null);
-insert into t_product_images values (6, 3, 'exhibit', '/pimages/91201874980747caac791bf5bc26325d.jpg', 'img2.jpg', null);
-insert into t_product_images values (6, 4, 'exhibit', '/pimages/6d85fb405fd540e9a1c7e283f04d6ac0.png', 'img3.png', null);
-insert into t_product_images values (6, 5, 'exhibit', '/pimages/8fdb8fbcc5844f77b91003224db57069.png', 'img4.png', null);
-insert into t_product_images values (6, 6, 'exhibit', '/pimages/9c4de87e751c476d87b5c8a53b14d577.png', 'img5.png', null);
-insert into t_product_images values (6, 7, 'exhibit', '/pimages/d189440e989e46c3b2a6948e47d58e8a.jpg', 'img6.jpg', null);
-insert into t_product_images values (6, 8, 'exhibit', '/pimages/32f1a0114caf4f31b31ed582cefadf4e.jpg', '参数.jpg', null);
-insert into t_product_images values (7, 1, 'thumbnail', '/pimages/19257ceddb4e4927b16db8f19da14385.jpg', 'Thinkbook 13s 4299.jpg', null);
-insert into t_product_images values (8, 2, 'thumbnail', '/pimages/335adb1dab3644bab5a34a4b71e7a88a.jpg', 'ThinkBook 14s 5299.jpg', null);
-insert into t_product_images values (9, 1, 'thumbnail', '/pimages/ae232628104e4276b559bca36e62c68d.jpg', 'ThinkPad T490 13999.jpg', null);
-insert into t_product_images values (10, 1, 'thumbnail', '/pimages/9b005897ba9042f6bb399e61fa87afe3.jpg', 'ThinkPad X1 Yoga.jpg', null);
-insert into t_product_images values (11, 1, 'thumbnail', '/pimages/2dd4bf57fe2f41029231ca276b6186c9.jpg', '一体机.jpg', null);
+insert into t_product_category values ('accessory', '配件', '丰富生活日常', 5, null);
+insert into t_product_category values ('cellphone', '手机', '让我们变得更近', 2, null);
+insert into t_product_category values ('computer', '电脑', '科技改变生活', 1, null);
+insert into t_product_category values ('appliance', '家电', '成为你的必需', 3, null);
+insert into t_product_category values ('life', '生活', '生活更有滋味', 6, null);
+insert into t_product_category values ('wearing', '穿戴', '为生活增添乐趣', 4, null);
 
 insert into t_cart values ('mouse', 1, 2);
 insert into t_cart values ('mouse', 2, 4);
