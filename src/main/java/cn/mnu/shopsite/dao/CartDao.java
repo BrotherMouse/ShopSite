@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -19,12 +20,15 @@ public class CartDao {
     public List<CartItem> queryCart(String account) {
         String sql = "select * from t_cart where account = ?";
 
-        List<CartItem> items = jdbcTemplate.query(sql, (rs, rowNum) -> {
-            int productId = rs.getInt("product_id");
-            int amount = rs.getInt("amount");
+        List<CartItem> items = new ArrayList<>();
+        jdbcTemplate.query(sql, rch -> {
+            int productId = rch.getInt("product_id");
+            int amount = rch.getInt("amount");
             Product product = productDao.queryProduct(productId);
 
-            return new CartItem(product, amount);
+            if(product != null) {
+                items.add(new CartItem(product, amount));
+            }
         }, account);
 
         return items;
