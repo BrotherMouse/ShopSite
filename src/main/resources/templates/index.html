@@ -6,42 +6,27 @@
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/fonts.css">
-    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/js/index.js"></script>
 </head>
 <body>
 <!-- 固定侧边栏 -->
-<div th:replace="float_tool :: float_tool"></div>
+<div th:replace="common/floatTool :: floatTool"></div>
 
 <!-- 顶部栏 -->
-<div th:replace="top_bar :: top_bar"></div>
+<div th:replace="common/topBar :: topBar"></div>
 
 <!-- 导航栏 -->
-<div th:replace="navigate :: navigate"></div>
+<div th:replace="common/navigate :: navigate"></div>
 
-<!-- 主页内容 -->
+<!-- 轮播图 -->
 <div class="Imgbox">
     <div class="lbview">
         <ul>
-
-            <li class="lunbo">
-                <a href="##"><img src="images/index/slider/slider01.jpg"></a>
-            </li>
-            <li class="lunbo">
-                <a href="##"><img src="images/index/slider/slider02.jpg"></a>
-            </li>
-            <li class="lunbo">
-                <a href="##"><img src="images/index/slider/slider03.jpg"></a>
-            </li>
-            <li class="lunbo">
-                <a href="##"><img src="images/index/slider/slider04.jpg"></a>
-            </li>
-            <li class="lunbo">
-                <a href="##"><img src="images/index/slider/slider02.jpg"></a>
-            </li>
-            <li class="lunbo">
-                <a href="##"><img src="images/index/slider/slider03.jpg"></a>
+            <li th:each="slideProduct:${slideProducts}" class="lunbo">
+                <a th:href="@{'/product/' + ${slideProduct.id}}">
+                    <img th:src="${slideProduct.coverPath}">
+                </a>
             </li>
         </ul>
     </div>
@@ -63,6 +48,7 @@
     </div>
 </div>
 
+<!-- 人气栏和商品展示栏 -->
 <div class="content-desc">
     <div class="container">
         <div class="banner">
@@ -71,46 +57,45 @@
         <!-- 人气栏 -->
         <div class="popular">
             <ul>
-                <li th:each="productPop:${popList}">
-                    <a th:href="'/product/' + ${productPop.id}">
+                <li th:each="popProduct:${popProducts}">
+                    <a th:href="@{'/product/' + ${popProduct.id}}">
                         <div class="product-desc">
-                            <p class="pro-name" th:text="${productPop.name}">小米笔记本</p>
+                            <p class="pro-name" th:text="${popProduct.name}">小米笔记本</p>
                             <p class="pro-price">
-                                ￥<span th:text="${productPop.price}">6299</span>元起
+                                ￥<span th:text="${popProduct.price}">6299</span>元起
                             </p>
-                            <img th:src="${productPop.thumbnailPath }">
+                            <img th:src="${popProduct.coverPath}">
                         </div>
                     </a>
                 </li>
-
             </ul>
         </div>
         <!-- 商品展示栏 -->
-        <div class="phone" th:each="productShow:${allCategories}">
+        <div class="phone" th:each="categoryProducts:${categoryNewProductsMore}">
             <div class="box-hd">
                 <div class="hd-left">
                     <a href="#">
-                        <span class="span1" th:text="${productShow.category.name }">手机</span>
+                        <span class="span1" th:text="${categoryProducts.category.name }">手机</span>
                         <span class="span2">/</span>
-                        <span class="span3" th:text="${productShow.category.adWords}">让我们变得更近</span>
+                        <span class="span3" th:text="${categoryProducts.category.slogan}">让我们变得更近</span>
                     </a>
                 </div>
                 <div class="hd-right">
-                    <a href="#">
+                    <a th:href="@{'/category/' + ${categoryProducts.category.id}}">
                         <span>更多...</span>
                     </a>
                 </div>
             </div>
             <div class="phone-left" >
-                <a href="#">
-                    <img th:src="${productShow.category.adImage}" >
+                <a th:if="${categoryProducts.adProduct != null}" th:href="@{'/product/' + ${categoryProducts.adProduct.id}}">
+                    <img th:src="${categoryProducts.adProduct.coverPath}" >
                 </a>
             </div>
             <div class="phone-right">
                 <ul>
-                    <li th:each="product:${productShow.products}">
-                        <a th:href="'/product/' + ${product.id}">
-                            <img th:src="${product.thumbnailPath }">
+                    <li th:each="product:${categoryProducts.products}">
+                        <a th:href="@{'/product/' + ${product.id}}">
+                            <img th:src="${product.coverPath}">
                             <div class="introduce">
                                 <p class="name" th:text="${product.name}">
                                     小米Note8 Pro
@@ -121,18 +106,13 @@
                             </div>
                         </a>
                     </li>
-
-
                 </ul>
             </div>
         </div>
-
     </div>
 </div>
 
-
 <!-- 脚部 -->
-<div th:replace="footer :: footer"></div>
-
+<div th:replace="common/footer :: footer"></div>
 </body>
 </html>

@@ -2,6 +2,7 @@ package cn.mnu.shopsite.dao;
 
 import cn.mnu.shopsite.model.ProductCategory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -24,8 +25,7 @@ public class ProductCategoryDao {
 
             brand.setId(rs.getString("id"));
             brand.setName(rs.getString("name"));
-            brand.setAdWords(rs.getString("ad_words"));
-            brand.setAdImage(rs.getString("ad_image"));
+            brand.setSlogan(rs.getString("slogan"));
             brand.setDisplayOrder(rs.getInt("display_order"));
             brand.setRemark(rs.getString("remark"));
 
@@ -56,5 +56,24 @@ public class ProductCategoryDao {
         ProductCategory category = queryCategory(id);
 
         return category == null ? null : category.getName();
+    }
+
+    public boolean addCategory(ProductCategory category) {
+        String insertOrderSql = "insert into t_product_category values (?, ?, ?, ?, ?)";
+
+        try {
+            jdbcTemplate.update(insertOrderSql, category.getId(), category.getName(), category.getSlogan(),
+                    category.getDisplayOrder(), category.getRemark());
+            return true;
+        }
+        catch(DataAccessException ex) {
+            return false;
+        }
+    }
+
+    public void deleteCategory(ProductCategory category) {
+        String insertOrderSql = "delete from t_product_category where id = ?";
+
+        jdbcTemplate.update(insertOrderSql, category.getId());
     }
 }

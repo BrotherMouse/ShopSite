@@ -25,7 +25,7 @@ public class ProductDao {
     /**
      * 商品数据包装类，将从数据库获得的商品信息，封装为商品类对象，即完成数据库字段和类字段的映射
      */
-    private class ProductRowMapper implements RowMapper<Product> {
+    public class ProductRowMapper implements RowMapper<Product> {
         @Override
         public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
             Product product = new Product();
@@ -69,9 +69,9 @@ public class ProductDao {
         List<String> exhibitPaths = new ArrayList<>();
         jdbcTemplate.query(sql, rs -> {
             String imagePath = rs.getString("path");
-            //缩略图
-            if("thumbnail".equals(rs.getString("type"))) {
-                product.setThumbnailPath(imagePath);
+            //封面图
+            if("cover".equals(rs.getString("type"))) {
+                product.setCoverPath(imagePath);
             }
             //展示图
             else {
@@ -93,19 +93,6 @@ public class ProductDao {
         String sql = "select * from t_product where brand_id = ? order by listing_date desc limit ?";
 
         return jdbcTemplate.query(sql, rowMapper, brandId, n);
-    }
-
-    /**
-     * 查询某个种类的最热销的n个商品信息
-     *
-     * @param categoryId 品牌id，如Cellphone、Computer等
-     * @param n 取最热销的n个
-     * @return 该种类最热销的m个商品信息，m <= n
-     */
-    public List<Product> queryCategoryHotProducts(String categoryId, int n) {
-        String sql = "select * from t_product where category_id = ? and purchase_amount > 0 order by (purchase_amount - stock_balance) / purchase_amount desc limit ?";
-
-        return jdbcTemplate.query(sql, rowMapper, categoryId, n);
     }
 
     /**
@@ -178,5 +165,19 @@ public class ProductDao {
         }
 
         return false;
+    }
+
+    public List<Product> getAllProduct() {
+        String sql = "select * from t_product";
+
+        return jdbcTemplate.query(sql, rowMapper);
+    }
+
+    public void deleteProduct(Product product) {
+        String deleteImagesSql = "delete from t_product_images where id = ?";
+        String deleteProductSql = "delete from t_product where id = ?";
+
+        jdbcTemplate.update(deleteImagesSql, product.getId());
+        jdbcTemplate.update(deleteProductSql, product.getId());
     }
 }

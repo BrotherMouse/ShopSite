@@ -4,35 +4,30 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 /**
  * 商品种类
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductCategory {
     /**
-     * 商品种类id
+     * 商品种类id，如computer、cellphone
      */
     private String id;
 
     /**
-     * 种类名称
+     * 种类名称，如电脑、手机
      */
     private String name;
 
     /**
-     * 广告语
+     * 宣传语，如科技改变生活
      */
-    private String adWords;
+    private String slogan;
 
     /**
-     * 广告图片路径
-     */
-    private String adImage;
-
-    /**
-     * 展示顺序
+     * 展示顺序，数值越小，在页面中显示越靠前
      */
     private int displayOrder;
 

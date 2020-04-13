@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+	<title>商品管理</title>
+	<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="/js/management.js"></script>
+</head>
+<body>
+<!--商品分类管理-->
+<div>
+	<h2>商品分类管理</h2>
+	<span>分类代码：</span>
+	<input type="text" id="cmCategoryId" placeholder="如computer、cellphone"/>
+	<span>分类名称：</span>
+	<input type="text" id="cbCategoryName" placeholder="如电脑、手机"/>
+	<span>分类标语：</span>
+	<input type="text" id="cbCategorySlogan" placeholder="如科技改变生活"/>
+	<span>显示顺序：</span>
+	<input type="text" id="cbCategoryDisplayOrder" placeholder="1"/>
+	<button onclick="addCategory()">添加</button><br>
+	<table border="1" cellspacing="0">
+		<tr>
+			<th>分类代码</th>
+			<th>分类名称</th>
+			<th>分类标语</th>
+			<th>显示顺序</th>
+			<th>操作</th>
+		</tr>
+		<tr th:each="category:${categories}">
+			<td th:text="${category.id}">computer</td>
+			<td th:text="${category.name}">电脑</td>
+			<td th:text="${category.slogan}">科技改变生活</td>
+			<td th:text="${category.displayOrder}">1</td>
+			<td>
+				<button th:onclick="@{'deleteCategory(&quot;' + ${category.id} + '&quot;)'}">删除</button>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<br><br><br><br>
+<!--商品品牌管理-->
+<div>
+	<h2>商品品牌管理</h2>
+	<span>品牌代码：</span>
+	<input type="text" id="cmBrandId" placeholder="如Xiaomi、Lenovo"/>
+	<span>品牌名称：</span>
+	<input type="text" id="cbBrandName" placeholder="如小米、联想"/>
+	<span>竞价排名：</span>
+	<input type="text" id="cbBrandRankOrder" placeholder="1"/>
+	<button onclick="addBrand()">添加</button><br>
+	<table border="1" cellspacing="0">
+		<tr>
+			<th>品牌代码</th>
+			<th>品牌名称</th>
+			<th>竞价排名</th>
+			<th>操作</th>
+		</tr>
+		<tr th:each="brand:${brands}">
+			<td th:text="${brand.id}">Xiaomi</td>
+			<td th:text="${brand.name}">小米</td>
+			<td th:text="${brand.rankOrder}">1</td>
+			<td>
+				<button th:onclick="@{'deleteBrand(&quot;' + ${brand.id} + '&quot;)'}">删除</button>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<br><br><br><br>
+<!--商品上架-->
+<div>
+	<h2>商品上架</h2>
+	<span>商品编号：</span>
+	<input type="text" readonly="readonly" id="addProductId"/><br>
+	<span>商品分类：</span>
+	<select id="addCategoryId">
+		<option th:each="category:${categories}" th:value="${category.id}" th:text="${category.name}">商品分类</option>
+	</select>
+	<br>
+	<span>商品品牌：</span>
+	<select id="addBrandId">
+			<option th:each="brand:${brands}" th:value="${brand.id}" th:text="${brand.name}">商品品牌</option>
+	</select>
+	<br>
+	<span>商品名称：</span>
+	<input type="text" id="addName"/><br>
+	<span>商品价格：</span>
+	<input type="text" id="addPrice"/><br>
+	<span>促销价格：</span>
+	<input type="text" id="addSalePrice"/><br>
+	<span>进货数量：</span>
+	<input type="text" id="addPurchasedAmount"/><br>
+	<span>库存数量：</span>
+	<input type="text" id="addStockBalance"/><br>
+	<span>上市日期：</span>
+	<input type="date" id="addListingDate"/><br>
+	<span>商品描述：</span>
+	<input type="text" id="addDescription"/><br>
+	<span>封面图片：</span>
+	<input type="file" id="addCoverImage"/><br>
+	<span>展示图片：</span>
+	<input type="file" multiple id="addExhibitImages"/><br>
+	<button onclick="saveProduct()">保存商品</button>
+</div>
+<br><br><br><br>
+
+<!--商品下架-->
+<div>
+	<h2>商品下架</h2>
+	<table border="1" cellspacing="0">
+		<tr>
+			<th>商品编号</th>
+			<th>商品分类</th>
+			<th>商品品牌</th>
+			<th>商品名称</th>
+			<th>商品价格</th>
+			<th>促销价格</th>
+			<th>进货数量</th>
+			<th>库存数量</th>
+			<th>上市日期</th>
+			<th>商品描述</th>
+		</tr>
+		<tr th:each="product:${products}">
+			<td th:text="${product.id}">1</td>
+			<td th:text="${product.categoryId}">cellphone</td>
+			<td th:text="${product.brandId}">Xiaomi</td>
+			<td th:text="${product.name}">小米手机10</td>
+			<td th:text="${product.price}">1000</td>
+			<td th:text="${product.salePrice}">900</td>
+			<td th:text="${product.purchasedAmount}">100</td>
+			<td th:text="${product.stockBalance}">90</td>
+			<td th:text="${product.listingDate}">2020/02/02</td>
+			<td>
+				<button th:onclick="@{'deleteProduct(&quot;' + ${product.id} + '&quot;)'}">下架</button>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<!--广告管理-->
+<div>
+	<h2>广告管理</h2>
+	<span>广告大类：</span>
+	<select id="addAdType">
+		<option value="slide">轮播广告</option>
+		<option value="category">分类广告</option>
+	</select>
+	<span>广告子类：</span>
+	<select id="addAdSubtype">
+		<option th:each="category:${categories}" th:value="${category.id}" th:text="${category.name}">商品分类</option>
+	</select>
+	<span>商品编号：</span>
+	<input type="text" id="addAdProductId" placeholder="1"/>
+	<button onclick="addAdvertisement()">添加</button><br>
+	<table border="1" cellspacing="0">
+		<tr>
+			<th>广告大类</th>
+			<th>广告子类</th>
+			<th>广告编号</th>
+			<th>商品编号</th>
+			<th>操作</th>
+		</tr>
+		<tr th:each="advertisement:${advertisements}">
+			<td th:text="${advertisement.type}">category</td>
+			<td th:text="${advertisement.subtype}">computer</td>
+			<td th:text="${advertisement.id}">1</td>
+			<td th:text="${advertisement.productId}">1</td>
+			<td>
+				<button th:onclick="@{'deleteAdvertisement(&quot;' + ${advertisement.type} + '&quot;,&quot;' + ${advertisement.subtype} + '&quot;,&quot;' + ${advertisement.id} + '&quot;)'}">删除</button>
+			</td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

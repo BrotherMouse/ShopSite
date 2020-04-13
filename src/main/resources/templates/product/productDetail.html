@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<title>商品详情</title>
+	<link rel="stylesheet" type="text/css" href="/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/css/index.css">
+	<link rel="stylesheet" type="text/css" href="/css/fonts.css">
+	<link rel="stylesheet" type="text/css" href="/css/pro-desc.css">
+	<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="/js/index.js"></script>
+	<script type="text/javascript" src="/js/pro-desc.js"></script>
+	<script type="text/javascript" src="/js/desc-goods.js"></script>
+</head>
+<body>
+<!-- 固定侧边栏 -->
+<div th:replace="common/floatTool :: floatTool"></div>
+
+<!-- 顶部栏 -->
+<div th:replace="common/topBar :: topBar"></div>
+
+<!-- 导航栏 -->
+<div th:replace="common/navigate :: navigate"></div>
+
+<!-- 商品信息 -->
+<div class="pro-desc">
+	<div class="container">
+		<div id="div1">
+            <div class="small_pic">
+                <span class="mark"></span>
+                <span class="float_layer"></span>
+                <img th:src="${product.coverPath}">
+            </div>
+            <div class="big_pic">
+                <img th:src="${product.coverPath}">
+            </div>
+        </div>
+        <div class="desc-right">
+        	<h2 class="introduce" th:utext="${product.name} +'<br>'+ ${product.description}">小米Pro 15.6" GTX显卡 <br>全新第八代英特尔酷睿处理器 ／ 升级金属双风扇 ／ 带宽提升80% ／ 15.6"全高清大屏超窄边大视野</h2>
+        	<div class="pro-price">
+        		<p class="standard-price" th:text="${product.price}">价格：￥7999</p>
+        		<p class="sales-price" th:text="${product.salePrice}">促销价：￥7699</p>
+        		<p class="yunfei">运费：10元</p>
+        	</div>
+        	<div class="service">
+        		<h2>服务：</h2>
+        	    <p>意外保修一年 ￥77</p>
+        		<p>意外保修二年 ￥98</p>
+        		<p>意外保修三年 ￥173</p>
+        	</div>
+        	<form action="">
+        		<input type="submit" value="立即购买" class="buy" style="background-color: #ff6700; color: #fff;"> 
+        		<input type="submit" value="加入购物车" class="in">
+				<span id="productId" th:text="${product.id}"></span>
+        	</form>
+        </div>
+	</div>
+</div>	
+
+<!-- 信息详情 -->
+<div id="desc-goods" >
+	<div class="container">
+		<span id="hd-desc">商品详情</span>
+		<span id="hd-para">规格参数</span>
+		<div id="hd-desc-sub" >
+			<img th:each="path:${product.exhibitPaths}" th:src="${path}">
+		</div>
+	    <div class="hd-para-sub"></div> 
+        <div class="other"></div>
+	</div>
+</div>
+
+<!-- 脚部 -->
+<div th:replace="common/footer :: footer"></div>
+</body>
+</html>	
+

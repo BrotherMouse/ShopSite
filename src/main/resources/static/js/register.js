@@ -1,66 +1,60 @@
-
-
 // 验证用户
 function checkUser(){
-	var username = document.getElementById('userName').value;
-	var testname = document.getElementById('testName');
-	if (username.length == 0) {
-		testname.innerHTML = '* 用户名不能为空';
-        testname.style.color = '#f00';
+	var account = document.getElementById('account').value;
+	var testAccount = document.getElementById('testAccount');
+	if (account.length == 0) {
+		testAccount.innerHTML = '* 用户名不能为空';
+        testAccount.style.color = '#f00';
         return false;
-	}else if (username.match(/^[\D][\w]{4,11}$/) == null) {
-    	 testname.innerHTML = '* 用户名必须首位为非数字，长度为5-12.';
-         testname.style.color = '#f00';
+	}else if (account.match(/^[\D][\w]{4,11}$/) == null) {
+    	 testAccount.innerHTML = '* 用户名必须首位为非数字，长度为5-12.';
+         testAccount.style.color = '#f00';
          return false;
     } else {
-         testname.innerHTML = '* 通过验证.';
-         testname.style.color = '#0a0';
+         testAccount.innerHTML = '* 通过验证.';
+         testAccount.style.color = '#0a0';
          return true;
      }
 }
 
 // 验证密码
 function checkPassword(){
-	var password = document.getElementById('passWord').value;
+	var password = document.getElementById('password').value;
 	var testpass = document.getElementById('testPass');
 	var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,15}$/;
-if (password.length == 0) {
-	testpass.innerHTML = '* 密码不能为空';
-	testpass.style.color = '#f00';
-	return false;
 
-}else if (reg.test(password)) {
-	
-	testpass.innerHTML = '* 通过验证';
-    testpass.style.color = '#0a0';
-    return true;
+    if (password.length == 0) {
+	    testpass.innerHTML = '* 密码不能为空';
+	    testpass.style.color = '#f00';
+	    return false;
 
-}else {
-    testpass.innerHTML = '* 密码必须是以数字和字母组合的8-16位数';
-	testpass.style.color = '#f00';
-	return false;
-}
+    }else if (reg.test(password)) {
+	    testpass.innerHTML = '* 通过验证';
+        testpass.style.color = '#0a0';
+        return true;
+    }else {
+        testpass.innerHTML = '* 密码必须是以数字和字母组合的8-16位数';
+	    testpass.style.color = '#f00';
+	    return false;
+    }
 }
 
 // 验证再次输入密码
-function checkRepsd(){
-	var password = document.getElementById('passWord').value;
-	var repsd = document.getElementById('repassWord').value;
-	var testRepsd = document.getElementById('testRepsd');
-	if (password.length == 0) {
-		testRepsd.innerHTML = '* 不能为空';
-		testRepsd.style.color = '#f00';
+function checkPassword2(){
+	var password = document.getElementById('password').value;
+	var password2 = document.getElementById('password2').value;
+	var testPassword2 = document.getElementById('testPassword2');
+	if (password2.length == 0) {
+		testPassword2.innerHTML = '* 不能为空';
+		testPassword2.style.color = '#f00';
 		return false;
-		
-	}else if(repsd !== password){
-		
-		testRepsd.innerHTML = '* 密码不一致';
-		testRepsd.style.color = '#f00';
+	}else if(password2 !== password){
+		testPassword2.innerHTML = '* 密码不一致';
+		testPassword2.style.color = '#f00';
 		return false;
-
 	}else {
-		testRepsd.innerHTML = '* 密码一致，通过验证';
-		testRepsd.style.color = '#0a0';
+		testPassword2.innerHTML = '* 密码一致，通过验证';
+		testPassword2.style.color = '#0a0';
 		return true;
 	}
 }
@@ -106,44 +100,44 @@ function checkPhone(){
 
 }
 
-
-
-
 //提交
  $(document).ready(function(){
  	$("#submitBtn").on("click", function(){
- 		var uID = $("#userName").val();
- 		var uPwd = $("#passWord").val();
- 		var testname = $("#testName").val();
- 		if(uID == "" || uPwd == ""){
- 			alert("提交失败");
+ 		var account = $("#account").val();
+ 		var password = $("#password").val();
+ 		var name = $("#name").val();
+ 		var email = $("#e-mail").val();
+ 		var cellphone = $("#phone").val();
+
+ 		if(account == "" || password == "" || name == "" || email == "" || cellphone == ""){
+ 			alert("请填写完整的注册信息");
  			return;
  		}
 
+        var formData = new FormData();
+        formData.append("account", account);
+        formData.append("password", password);
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("cellphone", cellphone);
  		$.ajax({
  			type: "post",
- 			url: "/registeruser",
- 			data: "{\"account\":\""+uID+"\",\"password\":\""+uPwd+"\"}",
- 			contentType: "application/json;charset=utf-8",
- 			dataType: "json",
- 			async: true,
+ 			url: "registerUser",
+ 			data: formData,
+            processData : false,
+            contentType : false,
  			success: function(data) {
  				if (data.result == "Success") {
-                                					alert("注册成功！");
-                                					 location.href = "login";
-
-                                                }else{
-                                                    alert("用户已存在！");
-                                                }
-
-
-                                			},
-                                			error: function(err){
-                                				alert(err);
-                                			}
+ 				    alert("注册成功！");
+ 				    location.href = "login";
+ 				}else{
+                    alert("用户已存在！");
+                }
+            },
+            error: function(err){
+                alert(err);
+            }
  		});
-
  	});
-
  }); 
  

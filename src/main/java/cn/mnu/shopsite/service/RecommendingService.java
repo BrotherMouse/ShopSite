@@ -1,5 +1,6 @@
 package cn.mnu.shopsite.service;
 
+import cn.mnu.shopsite.dao.AdvertisementDao;
 import cn.mnu.shopsite.dao.ProductBrandDao;
 import cn.mnu.shopsite.dao.ProductCategoryDao;
 import cn.mnu.shopsite.dao.ProductDao;
@@ -17,6 +18,9 @@ import java.util.List;
  */
 @Service
 public class RecommendingService {
+    @Autowired
+    private AdvertisementDao advertisementDao;
+
     @Autowired
     private ProductCategoryDao productCategoryDao;
 
@@ -49,28 +53,6 @@ public class RecommendingService {
     }
 
     /**
-     * 查询各类商品中最热销的n个商品信息
-     *
-     * @param n 取最热销的n个
-     * @return 各类商品中最热销的m个商品信息，m <= n
-     */
-    public List<CategoryProducts> queryCategoryHotProducts(int n) {
-        List<CategoryProducts> hotProducts = new ArrayList<>();
-
-        List<ProductCategory> categories = productCategoryDao.getAllCategoriesInOrder();
-        for(ProductCategory category : categories) {
-            List<Product> products = productDao.queryCategoryHotProducts(category.getId(), n);
-            if(products.isEmpty()) {
-                continue;
-            }
-
-            hotProducts.add(new CategoryProducts(category, products));
-        }
-
-        return hotProducts;
-    }
-
-    /**
      * 查询各类商品中最新上市的n个商品信息
      *
      * @param n 取最新上市的n个
@@ -86,7 +68,8 @@ public class RecommendingService {
                 continue;
             }
 
-            hotProducts.add(new CategoryProducts(category, products));
+            List<Product> adProducts = advertisementDao.queryCategoryAdvertisement(category.getId());
+            hotProducts.add(new CategoryProducts(category, products, adProducts.isEmpty() ? null : adProducts.get(0)));
         }
 
         return hotProducts;
@@ -100,5 +83,9 @@ public class RecommendingService {
      */
     public List<Product> queryPopProducts(int n) {
         return productDao.queryPopProducts(n);
+    }
+
+    public List<Product> querySlideProducts(int n) {
+        return advertisementDao.querySlideAdvertisement(n);
     }
 }

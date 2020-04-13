@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+	<title>订单</title>
+	<link rel="stylesheet" type="text/css" href="/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/css/index.css">
+	<link rel="stylesheet" type="text/css" href="/css/fonts.css">
+	<link rel="stylesheet" type="text/css" href="/css/order.css">
+	<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="/js/index.js"></script>
+</head>
+<body>
+<!-- 固定侧边栏 -->
+<div th:replace="common/floatTool :: floatTool"></div>
+
+<!-- 顶部栏 -->
+<div th:replace="common/topBar :: topBar"></div>
+
+<!-- 导航栏 -->
+<div th:replace="common/navigate :: navigate"></div>
+
+<!-- 订单详情及侧边推荐 -->
+<div id="order-desc">
+	<div class="container">
+		<div id="slideBar">
+	        <ul>
+			    <li th:each="popProduct:${popProducts}">
+					<a th:href="@{'/product/' + ${popProduct.id}}">
+						<img th:src="${popProduct.coverPath}">
+					</a>
+				</li>
+		    </ul>
+	    </div>
+
+		<div id="order-item">
+		    <span>全部订单</span>
+		    <ul th:each="orderItem:${order}">
+		    	<li th:each="product:${orderItem.products}">
+		    	    <img th:src="${product.coverPath}">
+		    	 	<span th:text="${product.name}">cedfew</span>
+		    	 	<button id="del">删除</button>
+		    	 	<div id="price-in">
+		    	 		实付金额：<span id="price" th:text="${product.price}">￥100</span>元
+		    	 	</div>
+		    	 </li>
+		    </ul>
+		</div>
+	    
+	</div>
+	
+</div>
+
+<!-- 脚部 -->
+<div th:replace="common/footer :: footer"></div>
+</body>

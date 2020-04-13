@@ -13,4 +13,6 @@ public class CategoryProducts {
     private ProductCategory category;
 
     private List<Product> products;
+
+    private Product adProduct;
 }

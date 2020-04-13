@@ -2,6 +2,7 @@ package cn.mnu.shopsite.dao;
 
 import cn.mnu.shopsite.model.ProductBrand;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -76,5 +77,23 @@ public class ProductBrandDao {
         ProductBrand brand = queryBrand(id);
 
         return brand == null ? null : brand.getName();
+    }
+
+    public boolean addBrand(ProductBrand brand) {
+        String insertOrderSql = "insert into t_product_brand values (?, ?, ?, ?)";
+
+        try {
+            jdbcTemplate.update(insertOrderSql, brand.getId(), brand.getName(), brand.getRankOrder(), brand.getRemark());
+            return true;
+        }
+        catch(DataAccessException ex) {
+            return false;
+        }
+    }
+
+    public void deleteBrand(ProductBrand brand) {
+        String insertOrderSql = "delete from t_product_brand where id = ?";
+
+        jdbcTemplate.update(insertOrderSql, brand.getId());
     }
 }

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+	<title>购物车</title>
+	<link rel="stylesheet" type="text/css" href="/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/css/index.css">
+	<link rel="stylesheet" type="text/css" href="/css/fonts.css">
+	<link rel="stylesheet" type="text/css" href="/css/shopCar.css">
+	<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="/js/index.js"></script>
+</head>
+<body>
+<!-- 固定侧边栏 -->
+<div th:replace="common/floatTool :: floatTool"></div>
+
+<!-- 顶部栏 -->
+<div th:replace="common/topBar :: topBar"></div>
+
+<!-- 导航栏 -->
+<div th:replace="common/navigate :: navigate"></div>
+
+<!--购物车详情  -->
+<div class="shopCar-desc">
+	<div class="container">
+		<div class="shopCar-hd">
+			<span>全部商品</span>
+			<ul>
+				<li>单价</li>
+				<li style="width: 107px; padding-left: 13px;">数量</li>
+				<li>小计</li>
+				<li>操作</li>
+			</ul>
+		</div>
+		<div id="desc-list">
+			<div id="list-item"  th:each="cartItem:${cart}">
+				<form>
+					<input type="checkbox" name="" id="select">
+				</form>
+				<a href="#" id="list-img">
+				<img th:src="${cartItem.product.coverPath}">
+				<span th:text="${cartItem.product.name} + ',' + ${cartItem.product.description}">cdsgfv</span>
+			    </a>
+			    <ul>
+				    <li>
+					    ￥<span id="price" th:text="${cartItem.product.salePrice}"></span>
+				    </li>
+				    <li>
+					    <button id="sub">-</button>
+					    <input type="text" id="quantity" value="1" th:text="${cartItem.amount}">
+						<button id="add">+</button>
+				    </li>
+				    <li>
+					    ￥<span id="sum-price">1999</span>
+				    </li>
+				    <li>
+						<button id="delete">删除</button>
+				    </li>
+			    </ul>
+			</div>
+			<div id="pay">
+				<div id="pay-price">
+					<span>
+						共<span id="number" style="color: red;"></span>件商品 总金额￥<span class="sum-price" style="color: red;">1666</span>
+					</span>
+				</div>
+				<div id="payBtn">
+					<input type="submit" value="立即结算">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 脚部 -->
+<div th:replace="common/footer :: footer"></div>
+</body>
+</html>

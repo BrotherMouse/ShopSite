@@ -1,6 +1,4 @@
-﻿
-
-//JQUERY加载完成后
+﻿//JQUERY加载完成后
 $(document).ready(function(){
 
   // 导航分类的显示与隐藏
@@ -23,67 +21,27 @@ $(document).ready(function(){
 
 });
 
-// 电脑
+//导航栏商品分类鼠标悬浮
 $(document).ready(function(){
 
- $(".computer-item").mouseover(function(){
+  $(".computer-item").mouseover(function(){
     var itemId = this.id;
     var index = itemId.substring(itemId.indexOf('_') + 1);
-    var subItemId = 'hotCategorySub_' + index;
+    var subItemId = 'categorySub_' + index;
     $("#" + subItemId).show();
   });
 
   $(".computer-item").mouseout(function(){
     var itemId = this.id;
-        var index = itemId.substring(itemId.indexOf('_') + 1);
-        var subItemId = 'hotCategorySub_' + index;
-        $("#" + subItemId).hide();
+    var index = itemId.substring(itemId.indexOf('_') + 1);
+    var subItemId = 'categorySub_' + index;
+    $("#" + subItemId).hide();
   });
 
 });
 
-// 手机
-$(document).ready(function(){
-
- $("#phone-item").mouseover(function(){
-    $("#phone-sub-item").show();
-  });
-
-  $("#phone-item").mouseout(function(){
-    $("#phone-sub-item").hide();
-  });
-
-});
-
-// 家电
-$(document).ready(function(){
-
- $("#jiadian-item").mouseover(function(){
-    $("#jiadian-sub-item").show();
-  });
-
-  $("#jiadian-item").mouseout(function(){
-    $("#jiadian-sub-item").hide();
-  });
-
-});
-
-// 穿戴
-$(document).ready(function(){
-
- $("#chuandai-item").mouseover(function(){
-    $("#chuandai-sub-item").show();
-  });
-
-  $("#chuandai-item").mouseout(function(){
-    $("#chuandai-sub-item").hide();
-  });
-
-});
-
-// 轮播图
-
- $(function() {
+//轮播图
+$(function() {
     var index = 0;
     var lis = $(".list").find("li");
     var t;
@@ -143,17 +101,16 @@ $(document).ready(function(){
 
 })
 
- // 回到顶部
-
+// 回到顶部
 $(function(){
   $("#top").click(function() {
       $("html,body").animate({scrollTop:0}, 500);
-  }); 
- })
+  });
+})
 
 // 回到底部
 $(function(){
   $("#bottom").click(function() {
       $("html,body").animate({scrollTop: document.body.clientHeight}, 500);
-  }); 
- })
+  });
+})

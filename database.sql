@@ -6,8 +6,7 @@ drop table if exists `t_product_category`;
 create table t_product_category (
   id char(20) not null, #分类id，Cellphone、Computer
   name char(50), #分类名称，如手机、电脑
-  ad_words varchar(200), #该分类的广告语，如[科技改变生活]
-  ad_image char(100), #该分类的广告图片路径
+  slogan varchar(200), #该分类的宣传标语，如[科技改变生活]
   display_order int, #显示顺序，数值越小，在页面中的位置越靠前
   remark varchar(200), #备注
   primary key(id)
@@ -45,7 +44,7 @@ drop table if exists `t_product_images`;
 create table t_product_images (
   id int not null, #商品id，即t_product中的id
   sequence int not null, #顺序，数值越小，显示越靠前
-  type char(10), #图片类型，thumbnail - 缩略图（一个商品一般只有一张），exhibit - 展示图（一个商品一般有多张）
+  type char(10), #图片类型，cover - 封面图（一个商品一般只有一张），exhibit - 展示图（一个商品一般有多张）
   path char(100), #图片所在路径，/pimages/uuid_name.jpg
   original_name char(100), #图片文件原来的名称
   remark varchar(200), #备注
@@ -55,11 +54,14 @@ create table t_product_images (
 /******用户信息*****/
 drop table if exists `t_user`;
 create table t_user (
+  type char(10), #类别，user - 普通用户，admin - 管理员
   account char(20) not null, #账号，如mouse、peter
-  password char(20), #密码
   name char(20), #姓名
+  password char(20), #密码
   sex char(1), #性别
-  primary key(account)
+  email char(30), #邮箱
+  cellphone char(15), #手机
+  primary key(type, account)
 );
 
 /******购物车*****/
@@ -71,12 +73,15 @@ create table t_cart (
   primary key(account, product_id)
 );
 
-/******收藏*****/
-drop table if exists `t_collection`;
-create table t_collection (
-  account char(20) not null, #账号，即t_user中的account
-  product_id int not null, #商品id，即t_product中的id
-  primary key(account, product_id)
+/******广告*****/
+drop table if exists `t_advertisement`;
+create table t_advertisement (
+  type char(10) not null, #广告大类，slide - 轮播广告，category - 商品分类广告
+  subtype char(20) not null, #广告子类
+  id int not null, #该类型广告的id
+  product_id int, #商品id，即t_product中的id
+  remark varchar(200), #备注
+  primary key(type, subtype, id)
 );
 
 /******定单*****/

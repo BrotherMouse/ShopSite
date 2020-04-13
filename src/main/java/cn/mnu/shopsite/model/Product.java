@@ -67,9 +67,9 @@ public class Product {
     private String description;
 
     /**
-     * 缩略图（1张）路径
+     * 封面图（1张）路径
      */
-    private String thumbnailPath;
+    private String coverPath;
 
     /**
      * 展示图（多张）路径

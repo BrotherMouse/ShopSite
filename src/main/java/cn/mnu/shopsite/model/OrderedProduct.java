@@ -52,9 +52,9 @@ public class OrderedProduct {
     private String description;
 
     /**
-     * 缩略图（1张）路径
+     * 封面图（1张）路径
      */
-    private String thumbnailPath;
+    private String coverPath;
 
     /**
      * 展示图（多张）路径
@@ -70,7 +70,7 @@ public class OrderedProduct {
         this.amount = amount;
         this.listingDate = product.getListingDate();
         this.description = product.getDescription();
-        this.thumbnailPath = product.getThumbnailPath();
+        this.coverPath = product.getCoverPath();
         this.exhibitPaths = product.getExhibitPaths();
     }
 }

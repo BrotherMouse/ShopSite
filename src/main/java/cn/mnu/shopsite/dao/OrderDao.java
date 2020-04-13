@@ -57,7 +57,7 @@ public class OrderDao {
             int amount = rch.getInt("b.amount");
             OrderedProduct product = new OrderedProduct(productInfo.getId(), productInfo.getCategoryId(),
                     productInfo.getBrandId(), productInfo.getName(), price, amount, productInfo.getListingDate(),
-                    productInfo.getDescription(), productInfo.getThumbnailPath(), productInfo.getExhibitPaths());
+                    productInfo.getDescription(), productInfo.getCoverPath(), productInfo.getExhibitPaths());
             item.getProducts().add(product);
         }, account);
 
