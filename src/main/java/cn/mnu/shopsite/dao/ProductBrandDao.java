@@ -11,13 +11,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * 商品品牌信息dao
+ *
+ * @author Yanghai
+ */
 @Repository
 public class ProductBrandDao {
+    /**
+     * 操作数据库的对象
+     */
     @Autowired
     JdbcTemplate jdbcTemplate;
 
     private ProductBrandRowMapper rowMapper = new ProductBrandRowMapper();
 
+    /**
+     * 商品品牌数据行映射类，从数据库获得一行数据后，如何将这些数据设置为java类对象的字段值，通过此类完成
+     */
     private static class ProductBrandRowMapper implements RowMapper<ProductBrand> {
         @Override
         public ProductBrand mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -79,6 +90,12 @@ public class ProductBrandDao {
         return brand == null ? null : brand.getName();
     }
 
+    /**
+     * 添加商品品牌信息
+     *
+     * @param brand 商品品牌信息
+     * @return true - 成功，false - 失败（该商品品牌id已经存在）
+     */
     public boolean addBrand(ProductBrand brand) {
         String insertOrderSql = "insert into t_product_brand values (?, ?, ?, ?)";
 
@@ -91,9 +108,14 @@ public class ProductBrandDao {
         }
     }
 
-    public void deleteBrand(ProductBrand brand) {
+    /**
+     * 删除商品品牌信息
+     *
+     * @param id 品牌id
+     */
+    public void deleteBrand(String id) {
         String insertOrderSql = "delete from t_product_brand where id = ?";
 
-        jdbcTemplate.update(insertOrderSql, brand.getId());
+        jdbcTemplate.update(insertOrderSql, id);
     }
 }

@@ -4,7 +4,7 @@ use my_shop;
 /******商品分类信息*****/
 drop table if exists `t_product_category`;
 create table t_product_category (
-  id char(20) not null, #分类id，Cellphone、Computer
+  id char(20) not null, #分类id，如cellphone、computer
   name char(50), #分类名称，如手机、电脑
   slogan varchar(200), #该分类的宣传标语，如[科技改变生活]
   display_order int, #显示顺序，数值越小，在页面中的位置越靠前
@@ -12,10 +12,10 @@ create table t_product_category (
   primary key(id)
 );
 
-/******品牌信息*****/
+/******商品品牌信息*****/
 drop table if exists `t_product_brand`;
 create table t_product_brand (
-  id char(20) not null, #品牌id，如Xiaomi、Lenovo
+  id char(20) not null, #品牌id，如xiaomi、lenovo
   name char(50), #品牌名称，如小米、联想
   rank_order int, #排名顺序，数值越小，在页面中的位置越靠前
   remark varchar(200), #备注
@@ -27,11 +27,11 @@ drop table if exists `t_product`;
 create table t_product (
   id int not null, #商品id
   category_id char(20), #商品分类id，即t_product_category中的id
-  brand_id char(20), #品牌id，即t_product_brand中的id
+  brand_id char(20), #商品品牌id，即t_product_brand中的id
   name char(50), #商品名称，如iphone 10 plus
   price decimal(10, 2), #售价
   sale_price decimal(10, 2), #促销价
-  purchase_amount int, #进货数量
+  purchased_amount int, #进货数量
   stock_balance int, #库存数量
   listing_date date, #商品上市日期
   description varchar(200), #商品描述
@@ -64,7 +64,7 @@ create table t_user (
   primary key(type, account)
 );
 
-/******购物车*****/
+/******购物车信息*****/
 drop table if exists `t_cart`;
 create table t_cart (
   account char(20) not null, #账号，即t_user中的account
@@ -73,18 +73,18 @@ create table t_cart (
   primary key(account, product_id)
 );
 
-/******广告*****/
+/******广告信息*****/
 drop table if exists `t_advertisement`;
 create table t_advertisement (
   type char(10) not null, #广告大类，slide - 轮播广告，category - 商品分类广告
-  subtype char(20) not null, #广告子类
-  id int not null, #该类型广告的id
+  subtype char(20) not null, #广告子类，type=slide时此字段无意义、固定为'slide'，type=category时为商品分类id
+  id int not null, #该类型广告的id，可表示顺序
   product_id int, #商品id，即t_product中的id
   remark varchar(200), #备注
   primary key(type, subtype, id)
 );
 
-/******定单*****/
+/******定单信息*****/
 drop table if exists `t_order`;
 create table t_order (
   id int not null, #定单id

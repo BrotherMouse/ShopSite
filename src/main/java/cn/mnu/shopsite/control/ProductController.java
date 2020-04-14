@@ -20,15 +20,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 商品相关页面控制器
+ *
+ * @author Yanghai
+ */
 @Controller
 @RequestMapping("/product")
 public class ProductController {
+    /**
+     * 商品信息dao
+     */
     @Autowired
     private ProductDao productDao;
 
+    /**
+     * 购物车信息dao
+     */
     @Autowired
     private CartDao cartDao;
 
+    /**
+     * 商品推荐服务
+     */
     @Autowired
     private RecommendingService recommendingService;
 
@@ -59,12 +73,17 @@ public class ProductController {
         int productId = Integer.parseInt(info.get("productId"));
         int amount = Integer.parseInt(info.get("amount"));
 
-        cartDao.addProductToCart(user.getAccount(), productId, amount);
+        cartDao.addProductToCart(user, productId, amount);
 
         ret.put("result", "Success");
         return ret;
     }
 
+    /**
+     * 添加导航数据，即页面顶部各分类和品牌推荐商品的信息
+     *
+     * @param model model
+     */
     private void addNavigateData(Model model) {
         List<BrandProducts> brandNewProducts = recommendingService.queryBrandNewProducts(5);
         List<CategoryProducts> categoryNewProductsLess = recommendingService.queryCategoryNewProducts(5);

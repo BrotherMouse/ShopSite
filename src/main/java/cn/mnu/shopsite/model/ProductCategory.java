@@ -5,19 +5,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 商品种类
+ * 商品分类信息
+ *
+ * @author Yanghai
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductCategory {
     /**
-     * 商品种类id，如computer、cellphone
+     * 商品分类id，如computer、cellphone
      */
     private String id;
 
     /**
-     * 种类名称，如电脑、手机
+     * 分类名称，如电脑、手机
      */
     private String name;
 

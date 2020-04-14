@@ -14,21 +14,41 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
+/**
+ * 普通用户页面控制器
+ *
+ * @author Yanghai
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    /**
+     * 用户信息dao
+     */
     @Autowired
     private UserDao userDao;
 
+    /**
+     * 商品信息dao
+     */
     @Autowired
     private ProductDao productDao;
 
+    /**
+     * 购物车信息dao
+     */
     @Autowired
     private CartDao cartDao;
 
+    /**
+     * 定单信息dao
+     */
     @Autowired
     private OrderDao orderDao;
 
+    /**
+     * 商品推荐服务
+     */
     @Autowired
     private RecommendingService recommendingService;
 
@@ -47,6 +67,7 @@ public class UserController {
             ret.put("result", "NotExist");
         }
         else {
+            //检查密码是否正确
             String inputPassword = normalUser.getPassword();
             String correctPassword = user.getPassword();
             if(inputPassword != null && inputPassword.equals(correctPassword)) {
@@ -101,7 +122,7 @@ public class UserController {
             return "redirect:login";
         }
 
-        List<CartItem> cartItems = cartDao.queryCart(user.getAccount());
+        List<CartItem> cartItems = cartDao.queryCart(user);
         model.addAttribute("cart", cartItems);
         addNavigateData(model);
 
@@ -119,6 +140,7 @@ public class UserController {
             return ret;
         }
 
+        //逐个检查商品id是否存在
         OrderItem order = new OrderItem(0, new ArrayList<>(), new Date(), "ordered");
         for(Map<String, String> productOrder : productsOrder) {
             int productId = Integer.parseInt(productOrder.get("productId"));
@@ -134,7 +156,7 @@ public class UserController {
             order.getProducts().add(product);
         }
 
-        orderDao.addOrder(user.getAccount(), order);
+        orderDao.addOrder(user, order);
 
         ret.put("result", "Success");
         return ret;
@@ -147,12 +169,17 @@ public class UserController {
             return "redirect:login";
         }
 
-        List<OrderItem> orderItems = orderDao.queryAllOrders(user.getAccount());
+        List<OrderItem> orderItems = orderDao.queryAllOrders(user);
         model.addAttribute("order", orderItems);
         addNavigateData(model);
         return "user/order";
     }
 
+    /**
+     * 添加导航数据，即页面顶部各分类和品牌推荐商品、左侧人气商品的信息
+     *
+     * @param model model
+     */
     private void addNavigateData(Model model) {
         List<BrandProducts> brandNewProducts = recommendingService.queryBrandNewProducts(5);
         List<CategoryProducts> categoryNewProductsLess = recommendingService.queryCategoryNewProducts(5);

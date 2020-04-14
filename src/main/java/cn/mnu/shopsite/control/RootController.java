@@ -11,9 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+/**
+ * 首页控制器
+ *
+ * @author Yanghai
+ */
 @Controller
 @RequestMapping("/")
 public class RootController {
+    /**
+     * 商品推荐服务
+     */
     @Autowired
     private RecommendingService recommendingService;
 
@@ -29,6 +37,11 @@ public class RootController {
         return "index";
     }
 
+    /**
+     * 添加导航数据，即页面顶部各分类和品牌推荐商品、中部轮播和人气商品、底部各分类商品的信息
+     *
+     * @param model model
+     */
     private void addNavigateData(Model model) {
         List<BrandProducts> brandNewProducts = recommendingService.queryBrandNewProducts(5);
         List<CategoryProducts> categoryNewProductsLess = recommendingService.queryCategoryNewProducts(5);

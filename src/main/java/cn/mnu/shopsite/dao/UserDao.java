@@ -8,13 +8,19 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * 用户信息dao
+ */
 @Repository
 public class UserDao {
+    /**
+     * 操作数据库的对象
+     */
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     /**
-     * 根据账号获得用户信息
+     * 根据账号获得普通用户信息
      *
      * @param account 账号
      * @return null - 账号不存在，非null - 用户信息
@@ -24,7 +30,7 @@ public class UserDao {
     }
 
     /**
-     * 判断账号是否已存在，用于用户注册账号
+     * 判断普通用户账号是否已存在
      *
      * @param account 账号
      * @return true - 账号已存在，false - 账号不存在
@@ -33,10 +39,22 @@ public class UserDao {
         return getNormalUser(account) != null;
     }
 
+    /**
+     * 根据账号获得管理员信息
+     *
+     * @param account 账号
+     * @return null - 账号不存在，非null - 用户信息
+     */
     public User getAdminUser(String account) {
         return getUserByAccountAndType(account, "admin");
     }
 
+    /**
+     * 判断管理员账号是否已存在
+     *
+     * @param account 账号
+     * @return true - 账号已存在，false - 账号不存在
+     */
     public boolean adminAccountExists(String account) {
         return getAdminUser(account) != null;
     }
@@ -64,6 +82,12 @@ public class UserDao {
         return users.isEmpty() ? null : users.get(0);
     }
 
+    /**
+     * 添加用户信息
+     *
+     * @param user 用户信息
+     * @return true - 成功，false - 失败（账号已存在）
+     */
     private boolean addUser(User user) {
         String sql = "insert into t_user values (?, ?, ?, ?, ?, ?, ?)";
 
@@ -77,11 +101,23 @@ public class UserDao {
         }
     }
 
+    /**
+     * 添加普通用户信息
+     *
+     * @param normalUser 普通用户信息
+     * @return true - 成功，false - 失败（账号已存在）
+     */
     public boolean addNormalUser(User normalUser) {
         normalUser.setType("user");
         return addUser(normalUser);
     }
 
+    /**
+     * 添加管理员信息
+     *
+     * @param adminUser 普通用户信息
+     * @return true - 成功，false - 失败（账号已存在）
+     */
     public boolean addAdminUser(User adminUser) {
         adminUser.setType("admin");
         return addUser(adminUser);

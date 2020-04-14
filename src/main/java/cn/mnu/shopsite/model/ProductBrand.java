@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 品牌信息，即各生产商的信息
+ * 商品品牌信息
  *
  * @author Yanghai
  */
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductBrand {
     /**
-     * 品牌id，如Xiaomi、Lenovo
+     * 品牌id，如xiaomi、lenovo
      */
     private String id;
 

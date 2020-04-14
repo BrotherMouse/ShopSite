@@ -11,13 +11,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * 商品分类信息dao
+ *
+ * @author Yanghai
+ */
 @Repository
 public class ProductCategoryDao {
+    /**
+     * 操作数据库的对象
+     */
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     private ProductCategoryRowMapper rowMapper = new ProductCategoryRowMapper();
 
+    /**
+     * 商品分类数据行映射类，从数据库获得一行数据后，如何将这些数据设置为java类对象的字段值，通过此类完成
+     */
     private static class ProductCategoryRowMapper implements RowMapper<ProductCategory> {
         @Override
         public ProductCategory mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -33,18 +44,23 @@ public class ProductCategoryDao {
         }
     }
 
-    public List<ProductCategory> getAllCategories() {
-        String sql = "select * from t_product_category";
-
-        return jdbcTemplate.query(sql, rowMapper);
-    }
-
+    /**
+     * 获得全部商品分类信息（按显示顺序排序）
+     *
+     * @return 全部商品分类信息（按显示顺序排序）
+     */
     public List<ProductCategory> getAllCategoriesInOrder() {
         String sql = "select * from t_product_category order by display_order";
 
         return jdbcTemplate.query(sql, rowMapper);
     }
 
+    /**
+     * 查询商品分类信息
+     *
+     * @param id 分类id
+     * @return null - 商品分类不存在，非null - 商品分类信息
+     */
     public ProductCategory queryCategory(String id) {
         String sql = "select * from t_product_category where id = ?";
         List<ProductCategory> brands = jdbcTemplate.query(sql, rowMapper, id);
@@ -52,12 +68,12 @@ public class ProductCategoryDao {
         return brands.isEmpty() ? null : brands.get(0);
     }
 
-    public String queryCategoryName(String id) {
-        ProductCategory category = queryCategory(id);
-
-        return category == null ? null : category.getName();
-    }
-
+    /**
+     * 添加商品分类信息
+     *
+     * @param category 商品分类信息
+     * @return true - 成功，false - 失败（分类id已存在）
+     */
     public boolean addCategory(ProductCategory category) {
         String insertOrderSql = "insert into t_product_category values (?, ?, ?, ?, ?)";
 
@@ -71,9 +87,14 @@ public class ProductCategoryDao {
         }
     }
 
-    public void deleteCategory(ProductCategory category) {
+    /**
+     * 删除商品分类信息
+     *
+     * @param id 分类id
+     */
+    public void deleteCategory(String id) {
         String insertOrderSql = "delete from t_product_category where id = ?";
 
-        jdbcTemplate.update(insertOrderSql, category.getId());
+        jdbcTemplate.update(insertOrderSql, id);
     }
 }

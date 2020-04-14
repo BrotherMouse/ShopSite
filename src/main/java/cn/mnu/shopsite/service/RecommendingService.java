@@ -13,20 +13,33 @@ import java.util.List;
 
 /**
  * 商品推荐服务<br>
+ * 根据商品的销售情况，在首页展示最新商品、人气商品等
  *
- * 根据商品的销售情况，在首页展示热卖商品、最新商品等
+ * @author Yanghai
  */
 @Service
 public class RecommendingService {
+    /**
+     * 广告信息dao
+     */
     @Autowired
     private AdvertisementDao advertisementDao;
 
+    /**
+     * 商品分类信息dao
+     */
     @Autowired
     private ProductCategoryDao productCategoryDao;
 
+    /**
+     * 商品品牌信息dao
+     */
     @Autowired
     private ProductBrandDao productBrandDao;
 
+    /**
+     * 商品信息dao
+     */
     @Autowired
     private ProductDao productDao;
 
@@ -85,6 +98,12 @@ public class RecommendingService {
         return productDao.queryPopProducts(n);
     }
 
+    /**
+     * 获得轮播广告商品信息
+     *
+     * @param n 获取n个
+     * @return m个要轮广告的商品信息，m <= n
+     */
     public List<Product> querySlideProducts(int n) {
         return advertisementDao.querySlideAdvertisement(n);
     }

@@ -22,12 +22,12 @@ public class Product {
     private int id;
 
     /**
-     * 商品种类id，即ProductCategory中的id，如Cellphone、Computer
+     * 商品分类id，即ProductCategory中的id，如cellphone、computer
      */
     private String categoryId;
 
     /**
-     * 所属品牌id，即ProductBrand中的id，如Xiaomi、Lenovo
+     * 商品品牌id，即ProductBrand中的id，如xiaomi、lenovo
      */
     private String brandId;
 
@@ -65,6 +65,11 @@ public class Product {
      * 商品描述
      */
     private String description;
+
+    /**
+     * 备注
+     */
+    private String remark;
 
     /**
      * 封面图（1张）路径

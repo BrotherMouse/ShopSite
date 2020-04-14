@@ -7,22 +7,27 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 已下单的商品信息bean
+ *
+ * @author Yanghai
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderedProduct {
     /**
-     * 商品id
+     * 商品id，即Product中的id
      */
     private int id;
 
     /**
-     * 商品种类id，即ProductCategory中的id，如Cellphone、Computer
+     * 商品种类id，即ProductCategory中的id，如cellphone、Computer
      */
     private String categoryId;
 
     /**
-     * 所属品牌id，即ProductBrand中的id，如Xiaomi、Lenovo
+     * 所属品牌id，即ProductBrand中的id，如xiaomi、lenovo
      */
     private String brandId;
 
@@ -42,7 +47,7 @@ public class OrderedProduct {
     private int amount;
 
     /**
-     * 上市日期，商品的上市日期，用于index页面中【品牌分类】展示各品牌最新上市几款商品
+     * 上市日期
      */
     private Date listingDate;
 
@@ -50,6 +55,11 @@ public class OrderedProduct {
      * 商品描述
      */
     private String description;
+
+    /**
+     * 备注
+     */
+    private String remark;
 
     /**
      * 封面图（1张）路径
@@ -61,15 +71,33 @@ public class OrderedProduct {
      */
     private List<String> exhibitPaths;
 
+    /**
+     * 根据商品信息生成已下单商品信息
+     *
+     * @param product 商品信息
+     * @param amount 下单数量
+     */
     public OrderedProduct(Product product, int amount) {
+        this(product, product.getSalePrice(), amount);
+    }
+
+    /**
+     * 根据商品信息生成已下单商品信息
+     *
+     * @param product 商品信息
+     * @param price 成交价格
+     * @param amount 下单数量
+     */
+    public OrderedProduct(Product product, double price, int amount) {
         this.id = product.getId();
         this.categoryId = product.getCategoryId();
         this.brandId = product.getBrandId();
         this.name = product.getName();
-        this.price = product.getSalePrice();
+        this.price = price;
         this.amount = amount;
         this.listingDate = product.getListingDate();
         this.description = product.getDescription();
+        this.remark = product.getRemark();
         this.coverPath = product.getCoverPath();
         this.exhibitPaths = product.getExhibitPaths();
     }

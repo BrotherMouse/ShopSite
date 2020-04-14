@@ -17,24 +17,47 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * 管理员操作页面控制器
+ *
+ * @author Yanghai
+ */
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    /**
+     * 商品图片存储位置，配置在application.yml文件中
+     */
     @Value("${product.images}")
     private String productImagesPath;
 
+    /**
+     * 用户信息dao
+     */
     @Autowired
     private UserDao userDao;
 
+    /**
+     * 商品信息dao
+     */
     @Autowired
     private ProductDao productDao;
 
+    /**
+     * 商品品牌信息dao
+     */
     @Autowired
     private ProductBrandDao productBrandDao;
 
+    /**
+     * 商品分类信息dao
+     */
     @Autowired
     private ProductCategoryDao productCategoryDao;
 
+    /**
+     * 广告信息dao
+     */
     @Autowired
     private AdvertisementDao advertisementDao;
 
@@ -53,6 +76,7 @@ public class AdminController {
             ret.put("result", "NotExist");
         }
         else {
+            //检查密码是否正确
             String inputPassword = adminUser.getPassword();
             String correctPassword = user.getPassword();
             if(inputPassword != null && inputPassword.equals(correctPassword)) {
@@ -152,7 +176,7 @@ public class AdminController {
             return ret;
         }
 
-        productCategoryDao.deleteCategory(category);
+        productCategoryDao.deleteCategory(category.getId());
         ret.put("result", "Success");
 
         return ret;
@@ -191,7 +215,7 @@ public class AdminController {
             return ret;
         }
 
-        productBrandDao.deleteBrand(brand);
+        productBrandDao.deleteBrand(brand.getId());
         ret.put("result", "Success");
 
         return ret;
@@ -243,10 +267,17 @@ public class AdminController {
         return ret;
     }
 
-    private String saveFile(MultipartHttpServletRequest request) throws IOException {
+    /**
+     * 保存图片文件
+     *
+     * @param request 文件上传请求
+     * @throws IOException 写文件时发生错误
+     */
+    private void saveFile(MultipartHttpServletRequest request) throws IOException {
         int productId = Integer.parseInt(request.getParameter("productId"));
         String type = request.getParameter("type");
 
+        //多个文件，逐个保存
         Iterator<String> iterator = request.getFileNames();
         while(iterator.hasNext()) {
             MultipartFile file = request.getFile(iterator.next());
@@ -266,10 +297,14 @@ public class AdminController {
 
             productDao.addProductImage(productId, type, uuidFileName, filePureName);
         }
-
-        return "Success";
     }
 
+    /**
+     * 获得纯粹的文件名<br>
+     * 上传到服务器端的文件名可能带路径信息，这里去掉其路径
+     * @param filePath 文件名，可能形如D:/images/xiaomi8.jpg
+     * @return 纯粹的文件名，如xiaomi8.jpg
+     */
     private String getFilePureName(String filePath) {
         int unixSep = filePath.lastIndexOf('/');
         int winSep = filePath.lastIndexOf('\\');
@@ -283,7 +318,15 @@ public class AdminController {
         }
     }
 
+    /**
+     * 生成uuid文件名<br>
+     * 为保证图片文件名不重复，使用uuid对上传的图片文件进行重命名（不带-）
+     *
+     * @param fileName 上传的图片文件的名称
+     * @return 以uuid为名称的文件名，形如bc8ec553e65e491688c7ca8364408378.jpg
+     */
     private String generateUuidImageFileName(String fileName) {
+        //先获得图片文件的类型，无法获得置设为.jpg
         String fileType;
         int dotPosition = fileName.lastIndexOf('.');
         if(dotPosition < 0) {
@@ -293,6 +336,7 @@ public class AdminController {
             fileType = fileName.substring(dotPosition);
         }
 
+        //生成uuid并去掉其中的-符号，与文件类型拼成新的文件名
         return UUID.randomUUID().toString().replaceAll("-", "") + fileType;
     }
 
@@ -307,7 +351,7 @@ public class AdminController {
             return ret;
         }
 
-        productDao.deleteProduct(product);
+        productDao.deleteProduct(product.getId());
         ret.put("result", "Success");
 
         return ret;

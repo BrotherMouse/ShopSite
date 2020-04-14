@@ -1,6 +1,5 @@
 package cn.mnu.shopsite.dao;
 
-import cn.mnu.shopsite.model.OrderedProduct;
 import cn.mnu.shopsite.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -13,17 +12,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 商品信息dao
+ */
 @Repository
 public class ProductDao {
+    /**
+     * 往数据库插数据时最多尝试的次数
+     */
     private static final int TRY_TIMES = 10;
 
+    /**
+     * 操作数据库的对象
+     */
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     private ProductRowMapper rowMapper = new ProductRowMapper();
 
     /**
-     * 商品数据包装类，将从数据库获得的商品信息，封装为商品类对象，即完成数据库字段和类字段的映射
+     * 商品信息数据行映射类，从数据库获得一行数据后，如何将这些数据设置为java类对象的字段值，通过此类完成
      */
     public class ProductRowMapper implements RowMapper<Product> {
         @Override
@@ -36,10 +44,11 @@ public class ProductDao {
             product.setName(rs.getString("name"));
             product.setPrice(rs.getDouble("price"));
             product.setSalePrice(rs.getDouble("sale_price"));
-            product.setPurchasedAmount(rs.getInt("purchase_amount"));
+            product.setPurchasedAmount(rs.getInt("purchased_amount"));
             product.setStockBalance(rs.getInt("stock_balance"));
             product.setListingDate(rs.getDate("listing_date"));
             product.setDescription(rs.getString("description"));
+            product.setRemark(rs.getString("remark"));
 
             setProductImagePath(product);
             return product;
@@ -85,7 +94,7 @@ public class ProductDao {
     /**
      * 查询某个品牌的最新上架的n个商品信息
      *
-     * @param brandId 品牌id，如Xiaomi、Lenovo等
+     * @param brandId 品牌id，如xiaomi、lenovo等
      * @param n 取最新的n个
      * @return 该品牌最新上架的m个商品信息，m <= n
      */
@@ -98,7 +107,7 @@ public class ProductDao {
     /**
      * 查询某个种类的最新上市的n个商品信息
      *
-     * @param categoryId 品牌id，如Cellphone、Computer等
+     * @param categoryId 品牌id，如cellphone、computer等
      * @param n 取最新上市的n个
      * @return 该种类最新上市的m个商品信息，m <= n
      */
@@ -115,15 +124,24 @@ public class ProductDao {
      * @return 最具人气的m个商品信息，m <= n
      */
     public List<Product> queryPopProducts(int n) {
-        String sql = "select * from t_product order by (purchase_amount - stock_balance) desc limit ?";
+        String sql = "select * from t_product where purchased_amount <> 0 order by (purchased_amount - stock_balance) / purchased_amount desc limit ?";
 
         return jdbcTemplate.query(sql, rowMapper, n);
     }
 
+    /**
+     * 添加商品信息
+     *
+     * @param product 商品信息，其id不会被使用
+     * @return true - 成功（其id被设置），false - 失败（尝试若干次均失败）
+     */
     public boolean addProduct(Product product) {
         String maxIdString = "select IfNull(Max(id), 0) from t_product";
         String insertOrderSql = "insert into t_product values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+        /*
+         * 由于商品id是通过取当前最大的商品id加1，存在并发时id重复的可能，故而需要不断尝试，这里尝试TRY_TIMES次
+         */
         int tryTimes = TRY_TIMES;
         while(tryTimes-- > 0) {
             Integer maxId = jdbcTemplate.queryForObject(maxIdString, Integer.class);
@@ -132,7 +150,8 @@ public class ProductDao {
             try {
                 jdbcTemplate.update(insertOrderSql, id, product.getCategoryId(), product.getBrandId(),
                         product.getName(), product.getPrice(), product.getSalePrice(), product.getPurchasedAmount(),
-                        product.getStockBalance(), product.getListingDate(), product.getDescription(), null);
+                        product.getStockBalance(), product.getListingDate(), product.getDescription(),
+                        product.getRemark());
                 product.setId(id);
                 return true;
             }
@@ -144,12 +163,25 @@ public class ProductDao {
         return false;
     }
 
+    /**
+     * 添加商品图片
+     *
+     * @param productId 商品id
+     * @param type 图片类型，cover - 封面图片，exhibit - 展示图
+     * @param fileName 文件名（不带路径信息）
+     * @param originalName 文件原来的名字
+     * @return true - 成功，false - 失败（尝试若干次均失败）
+     */
     public boolean addProductImage(int productId, String type, String fileName, String originalName) {
         String maxSequenceString = "select IfNull(Max(sequence), 0) from t_product_images where id = ?";
         String insertOrderSql = "insert into t_product_images values (?, ?, ?, ?, ?, ?)";
 
+        //添加路径信息
         String path = "/pimages/" + fileName;
 
+        /*
+         * 由于顺序号是通过取当前最大的顺序号加1，存在并发时顺序号重复的可能，故而需要不断尝试，这里尝试TRY_TIMES次
+         */
         int tryTimes = TRY_TIMES;
         while(tryTimes-- > 0) {
             Integer maxSequence = jdbcTemplate.queryForObject(maxSequenceString, Integer.class, productId);
@@ -167,17 +199,27 @@ public class ProductDao {
         return false;
     }
 
+    /**
+     * 获得全部商品信息
+     *
+     * @return 全部商品信息
+     */
     public List<Product> getAllProduct() {
         String sql = "select * from t_product";
 
         return jdbcTemplate.query(sql, rowMapper);
     }
 
-    public void deleteProduct(Product product) {
+    /**
+     * 删除商品信息
+     *
+     * @param id 商品id
+     */
+    public void deleteProduct(int id) {
         String deleteImagesSql = "delete from t_product_images where id = ?";
         String deleteProductSql = "delete from t_product where id = ?";
 
-        jdbcTemplate.update(deleteImagesSql, product.getId());
-        jdbcTemplate.update(deleteProductSql, product.getId());
+        jdbcTemplate.update(deleteImagesSql, id);
+        jdbcTemplate.update(deleteProductSql, id);
     }
 }
