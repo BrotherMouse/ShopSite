@@ -97,7 +97,7 @@ public class OrderDao {
     public boolean addOrder(User user, OrderItem order) {
         String maxIdString = "select IfNull(Max(id), 0) from t_order";
         String insertOrderSql = "insert into t_order values (?, ?, ?, ?)";
-        String insertOrderProductsSql = "insert into t_order_products (?, ?, ?, ?)";
+        String insertOrderProductsSql = "insert into t_order_products values (?, ?, ?, ?)";
 
         /*
          * 先插定单信息

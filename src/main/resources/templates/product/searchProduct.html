@@ -13,13 +13,13 @@
 </head>
 <body>
 <!-- 固定侧边栏 -->
-<div th:replace="float_tool :: float_tool"></div>
+<div th:replace="common/floatTool :: floatTool"></div>
 
 <!-- 顶部栏 -->
-<div th:replace="top_bar :: top_bar"></div>
+<div th:replace="common/topBar :: topBar"></div>
 
 <!-- 导航栏 -->
-<div th:replace="navigate :: navigate"></div>
+<div th:replace="common/navigate :: navigate"></div>
 
 <!-- 商品展示 -->
 <div class="searchShow">
@@ -27,7 +27,7 @@
         <span class="tip">为您查找到如下商品：</span>
         <div class="showInfo">
             <ul>
-                <li th:each="product:${product:${productShow.products}">
+                <li th:each="product:${products}">
                     <a th:href="'/product/' + ${product.id}">
                         <img th:src="${product.coverPath}">
                         <div class="introduce">
@@ -46,4 +46,6 @@
 </div>
 
 <!-- 脚部 -->
-<div th:replace="footer :: footer"></div>
+<div th:replace="common/footer :: footer"></div>
+</body>
+</html>

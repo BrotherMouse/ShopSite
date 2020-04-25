@@ -129,39 +129,6 @@ public class UserController {
         return "user/cart";
     }
 
-    @RequestMapping("/generateOrder")
-    @ResponseBody
-    public Map<String, Object> generateOrder(HttpSession session, @RequestBody List<Map<String, String>> productsOrder) {
-        Map<String, Object> ret = new HashMap<>();
-
-        User user = (User)session.getAttribute("user");
-        if(user == null) {
-            ret.put("result", "NotLogin");
-            return ret;
-        }
-
-        //逐个检查商品id是否存在
-        OrderItem order = new OrderItem(0, new ArrayList<>(), new Date(), "ordered");
-        for(Map<String, String> productOrder : productsOrder) {
-            int productId = Integer.parseInt(productOrder.get("productId"));
-            int amount = Integer.parseInt(productOrder.get("amount"));
-
-            Product productInfo = productDao.queryProduct(productId);
-            if(productInfo == null) {
-                ret.put("result", "IllegalProductId");
-                return ret;
-            }
-
-            OrderedProduct product = new OrderedProduct(productInfo, amount);
-            order.getProducts().add(product);
-        }
-
-        orderDao.addOrder(user, order);
-
-        ret.put("result", "Success");
-        return ret;
-    }
-
     @RequestMapping("/order")
     public String order(HttpSession session, Model model) {
         User user = (User)session.getAttribute("user");

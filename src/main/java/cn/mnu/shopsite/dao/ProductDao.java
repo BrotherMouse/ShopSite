@@ -69,6 +69,20 @@ public class ProductDao {
     }
 
     /**
+     * 根据商品名称或描述模糊查找商品信息
+     *
+     * @param name 商品名称或者描述中包含的关键字
+     * @return 空List - 无相关商品，非空List - 相关商品信息
+     */
+    public List<Product> queryProduct(String name) {
+        String sql = "select * from t_product where name like ? or description like ?";
+        name = "%" + name + "%";
+        List<Product> products = jdbcTemplate.query(sql, rowMapper, name, name);
+
+        return products;
+    }
+
+    /**
      * 获得商品的图片路径并设置到相关字段
      *
      * @param product 商品信息

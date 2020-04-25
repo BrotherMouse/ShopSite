@@ -43,8 +43,66 @@ window.onload = function() {
 };
 
 //加入购物车
- $(document).ready(function(){
-    $(".in").on("click", function(){
-        var ID = $("#productId").val();
-    })
- });
+$(document).ready(function(){
+    $("#buyNowBtn").on("click", function(){
+        var productId = $("#productId").val();
+
+        var order = new Array();
+        order.push({
+            "id": productId,
+            "amount": 1
+        });
+        $.ajax({
+            type: "post",
+            url: "generateOrder",
+            data: JSON.stringify(order),
+            dataType: "json",
+            contentType : "application/json",
+            success: function(data) {
+                if (data.result == "Success") {
+                    alert("商品已下单，可在定单中查看！");
+                }
+                else if(data.result == "NotLogin") {
+                    alert("请先登录");
+                    location.href = "/user/login";
+                }
+                else{
+                    alert("下单失败，" + data.result);
+                }
+            },
+            error: function(err) {
+                alert(err);
+            }
+        });
+    });
+
+    $("#addToCartBtn").on("click", function(){
+        var productId = $("#productId").val();
+
+        var formData = new FormData();
+        formData.append("productId", productId);
+        formData.append("amount", "1");
+        $.ajax({
+            type: "post",
+            url: "addToCart",
+            data: formData,
+            processData : false,
+            contentType : false,
+            success: function(data) {
+                if (data.result == "Success") {
+                    alert("商品已添加到购物车，可在购物车中查看！");
+                }
+                else if(data.result == "NotLogin") {
+                    alert("请先登录");
+                    location.href = "/user/login";
+                }
+                else{
+                    alert("添加到购物车失败，" + data.result);
+                }
+            },
+            error: function(err) {
+                alert(err);
+            }
+        });
+    });
+});

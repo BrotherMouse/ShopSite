@@ -114,3 +114,15 @@ $(function(){
       $("html,body").animate({scrollTop: document.body.clientHeight}, 500);
   });
 })
+
+//搜索商品
+$(function(){
+    $("#searchBtn").click(function() {
+        var name = $("#searchName").val();
+        if(name == null || name == "") {
+            return;
+        }
+
+        location.href = "/product/search?name=" + name;
+    });
+})

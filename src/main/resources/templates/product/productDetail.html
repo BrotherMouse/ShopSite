@@ -49,9 +49,9 @@
         		<p>意外保修三年 ￥173</p>
         	</div>
         	<form action="">
-        		<input type="submit" value="立即购买" class="buy" style="background-color: #ff6700; color: #fff;"> 
-        		<input type="submit" value="加入购物车" class="in">
-				<span id="productId" th:text="${product.id}"></span>
+        		<input type="button" value="立即购买" id="buyNowBtn"  class="buy" style="background-color: #ff6700; color: #fff;">
+        		<input type="button" value="加入购物车" id="addToCartBtn" class="in">
+				<input type="hidden" id="productId" th:value="${product.id}"/>
         	</form>
         </div>
 	</div>

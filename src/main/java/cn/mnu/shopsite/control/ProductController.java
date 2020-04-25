@@ -1,24 +1,17 @@
 package cn.mnu.shopsite.control;
 
 import cn.mnu.shopsite.dao.CartDao;
+import cn.mnu.shopsite.dao.OrderDao;
 import cn.mnu.shopsite.dao.ProductDao;
-import cn.mnu.shopsite.model.BrandProducts;
-import cn.mnu.shopsite.model.CategoryProducts;
-import cn.mnu.shopsite.model.Product;
-import cn.mnu.shopsite.model.User;
+import cn.mnu.shopsite.model.*;
 import cn.mnu.shopsite.service.RecommendingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 商品相关页面控制器
@@ -41,6 +34,12 @@ public class ProductController {
     private CartDao cartDao;
 
     /**
+     * 定单信息dao
+     */
+    @Autowired
+    private OrderDao orderDao;
+
+    /**
      * 商品推荐服务
      */
     @Autowired
@@ -61,7 +60,7 @@ public class ProductController {
 
     @RequestMapping("/addToCart")
     @ResponseBody
-    public Map<String, Object> addToCart(HttpSession session, @RequestBody Map<String, String> info) {
+    public Map<String, Object> addToCart(HttpSession session, String productId, String amount) {
         Map<String, Object> ret = new HashMap<>();
 
         User user = (User)session.getAttribute("user");
@@ -70,13 +69,52 @@ public class ProductController {
             return ret;
         }
 
-        int productId = Integer.parseInt(info.get("productId"));
-        int amount = Integer.parseInt(info.get("amount"));
+        int productIdInt = Integer.parseInt(productId);
+        int amountInt = Integer.parseInt(amount);
 
-        cartDao.addProductToCart(user, productId, amount);
+        cartDao.addProductToCart(user, productIdInt, amountInt);
 
         ret.put("result", "Success");
         return ret;
+    }
+
+    @RequestMapping("/generateOrder")
+    @ResponseBody
+    public Map<String, Object> generateOrder(HttpSession session, @RequestBody List<OrderedProduct> orderProducts) {
+        Map<String, Object> ret = new HashMap<>();
+
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            ret.put("result", "NotLogin");
+            return ret;
+        }
+
+        //逐个检查商品id是否存在
+        OrderItem order = new OrderItem(0, new ArrayList<>(), new Date(), "ordered");
+        for(OrderedProduct orderProduct : orderProducts) {
+            Product productInfo = productDao.queryProduct(orderProduct.getId());
+            if(productInfo == null) {
+                ret.put("result", "IllegalProductId");
+                return ret;
+            }
+
+            OrderedProduct product = new OrderedProduct(productInfo, orderProduct.getAmount());
+            order.getProducts().add(product);
+        }
+
+        orderDao.addOrder(user, order);
+
+        ret.put("result", "Success");
+        return ret;
+    }
+
+    @RequestMapping("/search")
+    public String search(Model model, String name) {
+        List<Product> products = productDao.queryProduct(name);
+
+        model.addAttribute("products", products);
+
+        return "product/searchProduct";
     }
 
     /**
