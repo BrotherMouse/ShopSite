@@ -1,3 +1,6 @@
+#order-desc{
+	overflow:hidden;
+}
 #order-desc #slideBar{
 	float: left;
 }

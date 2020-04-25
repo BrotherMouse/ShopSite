@@ -1,0 +1,33 @@
+.searchShow{
+	background-color: #f5f5f5;
+	margin: 0 auto;
+}
+.searchShow .tip{
+	font-size: 25px;
+}
+.searchShow .showInfo ul{
+	overflow: hidden;
+	width: 1226px;
+}
+.searchShow .showInfo ul li{
+	float: left;
+	width: 225px;
+	height: 220px;
+	margin: 10px 0 10px 20px;
+	background-color: #fff;
+}
+.searchShow .showInfo ul li img{
+	width: 200px;
+	height: 150px;
+	padding-left: 12px;
+}
+.searchShow .showInfo ul li .name{
+	text-align: center;
+	color: #666;
+	font-size: 18px;
+}
+.searchShow .showInfo ul li .price{
+	text-align: center;
+	color: #ff6700;
+	font-size: 18px;
+}	
